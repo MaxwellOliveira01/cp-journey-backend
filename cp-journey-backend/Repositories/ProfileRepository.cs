@@ -1,39 +1,30 @@
-using cp_journey_backend.Api;
 using cp_journey_backend.Entities;
+using cp_journey_backend.Persistence;
 
-namespace cp_journey_backend.Services;
+namespace cp_journey_backend.Repositories;
 
 public interface IProfileRepository {
-
-    Task<Profile> Add(CreateProfileModel data);
-
-    Task<Profile> Update(UpdateProfileModel data);
     
-    Task<Profile> Get(string id);
+    Task Add(Profile profile);
+
+    Task Update(Profile profile);
+    
+    Task<Profile?> Get(string id);
     
     Task Delete(string id);
 
 }
 
-public class ProfileRepository : IProfileRepository {
+public class InMemoryProfileRepository(InMemoryDb dbContext) : IProfileRepository {
+    public Task Add(Profile profile)
+        => dbContext.AddProfile(profile);
 
-    public ProfileRepository() {
-        
-    }
+    public Task Update(Profile profile) 
+        => dbContext.UpdateProfile(profile);
 
-    public Task<Profile> Add(CreateProfileModel data) {
-        throw new NotImplementedException();
-    }
+    public Task<Profile?> Get(string id)
+        => dbContext.GetProfile(id);
 
-    public Task<Profile> Update(UpdateProfileModel data) {
-        throw new NotImplementedException();
-    }
-
-    public Task<Profile> Get(string id) {
-        throw new NotImplementedException();
-    }
-
-    public Task Delete(string id) {
-        throw new NotImplementedException();
-    }
+    public Task Delete(string id)
+        => dbContext.DeleteProfile(id);
 }

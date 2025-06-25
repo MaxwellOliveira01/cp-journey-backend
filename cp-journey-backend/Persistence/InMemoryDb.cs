@@ -2,14 +2,17 @@ using cp_journey_backend.Entities;
 
 namespace cp_journey_backend.Persistence;
 
-public class InMemoryDatabaseRepository {
+public class InMemoryDb {
 
     private List<Profile> _profiles = [];
+    private List<University> _universities = [];
     
-    public InMemoryDatabaseRepository() {
+    public InMemoryDb() {
         
     }
 
+    #region Profile
+    
     public Task<Profile?> GetProfile(string id)
         => Task.FromResult(_profiles.FirstOrDefault(p => p.Id == id));
 
@@ -29,4 +32,29 @@ public class InMemoryDatabaseRepository {
         return Task.CompletedTask;
     }
 
+    #endregion
+    
+    #region University
+    
+    public Task<University?> GetUniversity(string id)
+        => Task.FromResult(_universities.FirstOrDefault(u => u.Id == id));
+    
+    public Task AddUniversity(University university) {
+        _universities.Add(university);
+        return Task.CompletedTask;
+    }
+    
+    public Task DeleteUniversity(string id) {
+        _universities = _universities.Where(u => u.Id != id).ToList();
+        return Task.CompletedTask;
+    }
+    
+    public Task UpdateUniversity(University university) {
+        DeleteUniversity(university.Id);
+        AddUniversity(university);
+        return Task.CompletedTask;
+    }
+    
+    #endregion
+    
 }
