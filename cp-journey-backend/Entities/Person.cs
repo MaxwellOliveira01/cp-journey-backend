@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace cp_journey_backend.Entities;
 
-public class Profile : IEntity {
+public class Person : IEntity {
 
     [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
     public Guid Id { get; set; }

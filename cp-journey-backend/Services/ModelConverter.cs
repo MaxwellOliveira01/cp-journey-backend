@@ -9,11 +9,11 @@ public class ModelConverter {
         
     }
     
-    public ProfileModel ToModel(Profile profile, University? university) {
-        return new ProfileModel {
-            Id = profile.Id,
-            Name = profile.Name,
-            Handle = profile.Handle,
+    public PersonModel ToModel(Person person, University? university) {
+        return new PersonModel {
+            Id = person.Id,
+            Name = person.Name,
+            Handle = person.Handle,
             University = university != null ? ToModel(university) : null,
         };
     }

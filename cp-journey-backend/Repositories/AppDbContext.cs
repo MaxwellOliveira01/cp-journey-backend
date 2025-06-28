@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options) {
     
-    public DbSet<Profile> Profiles { get; set; }
+    public DbSet<Person> Persons { get; set; }
     
     public DbSet<Team> Teams { get; set; }
     

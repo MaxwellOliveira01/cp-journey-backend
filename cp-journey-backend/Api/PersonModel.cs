@@ -1,6 +1,6 @@
 namespace cp_journey_backend.Api;
 
-public class ProfileModel {
+public class PersonModel {
 
     public Guid Id { get; set; }
     
@@ -12,7 +12,7 @@ public class ProfileModel {
     
 }
 
-public class ProfileFullModel : ProfileModel {
+public class PersonFullModel : PersonModel {
     
     public List<TeamModel> Teams { get; set; }
     
@@ -22,7 +22,7 @@ public class ProfileFullModel : ProfileModel {
     
 }
 
-public class CreateProfileModel {
+public class CreatePersonModel {
     
     public string Name { get; set; }
     
@@ -32,7 +32,7 @@ public class CreateProfileModel {
     
 }
 
-public class UpdateProfileModel : CreateProfileModel {
+public class UpdatePersonModel : CreatePersonModel {
     
     public Guid Id { get; set; }
     

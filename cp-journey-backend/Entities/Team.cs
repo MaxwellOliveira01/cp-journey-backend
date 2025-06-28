@@ -9,8 +9,9 @@ public class Team : IEntity {
     public Guid Id { get; set; }
     
     public Guid? UniversityId { get; set; }
+    
     public University University { get; set; }
     
-    public List<Profile> Members { get; set; }
+    public List<TeamMember> Members { get; set; }
     
 }

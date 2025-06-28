@@ -11,7 +11,7 @@ public class TeamMember : IEntity {
     public Guid TeamId { get; set; }
     public Team Team { get; set; }
     
-    public Guid ProfileId { get; set; }
-    public Profile Profile { get; set; }
+    public Guid PersonId { get; set; }
+    public Person Person { get; set; }
     
 }

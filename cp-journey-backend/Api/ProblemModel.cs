@@ -14,6 +14,6 @@ public class ProblemModel {
 
 public class ProblemFullModel : ProblemModel {
     
-    public ProfileModel Setter { get; set; }
+    public PersonModel Setter { get; set; }
     
 }

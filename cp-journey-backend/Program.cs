@@ -9,10 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-builder.Services.AddScoped<IProfileService, ProfileService>();
+builder.Services.AddScoped<IPersonService, PersonService>();
 builder.Services.AddScoped<IUniversityService, UniversityService>();
 
-builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
+builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddScoped<IUniversityRepository, UniversityRepository>();
 builder.Services.AddScoped<ITeamRepository, TeamRepository>();
 

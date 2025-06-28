@@ -12,7 +12,7 @@ public class UniversityModel {
 
 public class UniversityFullModel : UniversityModel {
     
-    public List<ProfileModel> Students { get; set; }
+    public List<PersonModel> Students { get; set; }
     
     public List<TeamModel> Teams { get; set; }
     

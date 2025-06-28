@@ -5,38 +5,38 @@ using cp_journey_backend.Repositories;
 
 namespace cp_journey_backend.Services;
 
-public interface IProfileService {
-    Task<Profile> AddAsync(CreateProfileModel data);
-    Task<Profile> UpdateAsync(UpdateProfileModel data);
+public interface IPersonService {
+    Task<Person> AddAsync(CreatePersonModel data);
+    Task<Person> UpdateAsync(UpdatePersonModel data);
 }
 
-public class ProfileService(
-    IProfileRepository profileRepository,
+public class PersonService(
+    IPersonRepository personRepository,
     IUniversityRepository universityRepository,
     ModelConverter modelConverter
-) : IProfileService {
+) : IPersonService {
 
-    public async Task<Profile> AddAsync(CreateProfileModel data) {
+    public async Task<Person> AddAsync(CreatePersonModel data) {
         
-        var profile = new Profile {
+        var profile = new Person {
             Id = Guid.NewGuid(),
             Name = data.Name,
             Handle = data.Handle,
             UniversityId = data.UniversityId
         };
         
-        await profileRepository.AddAsync(profile);
+        await personRepository.AddAsync(profile);
         return profile;
     }
     
-    public async Task<Profile> UpdateAsync(UpdateProfileModel data) {
-        var profile = await profileRepository.GetRequiredAsync(data.Id);
+    public async Task<Person> UpdateAsync(UpdatePersonModel data) {
+        var profile = await personRepository.GetRequiredAsync(data.Id);
         
         profile.Name = data.Name;
         profile.Handle = data.Handle;
         profile.UniversityId = data.UniversityId;
 
-        await profileRepository.UpdateAsync(profile);
+        await personRepository.UpdateAsync(profile);
         
         return profile;
     }

@@ -6,17 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 namespace cp_journey_backend.Controllers;
 
 [ApiController]
-[Route("profile")]
-public class ProfileController(
-    IProfileService profileService,
-    IProfileRepository profileRepository,
+[Route("person")]
+public class PersonController(
+    IPersonService personService,
+    IPersonRepository personRepository,
     IUniversityRepository universityRepository,
     ModelConverter modelConverter)
 : ControllerBase {
 
     [HttpGet("{id}")]
-    public async Task<ProfileModel> GetAsync(Guid id) {
-        var profile = await profileRepository.GetRequiredAsync(id);
+    public async Task<PersonModel> GetAsync(Guid id) {
+        var profile = await personRepository.GetRequiredAsync(id);
         
         var university = profile.UniversityId.HasValue 
             ? await universityRepository.GetAsync(profile.UniversityId.Value)
@@ -26,8 +26,8 @@ public class ProfileController(
     }
 
     [HttpGet("list")] // TODO: implement pagination
-    public async Task<List<ProfileModel>> ListAsync() {
-        var profiles = await profileRepository.ListAsync();
+    public async Task<List<PersonModel>> ListAsync() {
+        var profiles = await personRepository.ListAsync();
         // Tudo isso aqui pq eu coloquei ProfileModel.UniversityModel
         // e preciso de uma query a mais pra pegar esse dado
         // TODO: tirar esse universityModel do ProfileModel
@@ -43,8 +43,8 @@ public class ProfileController(
     }
     
     [HttpPost]
-    public async Task<ProfileModel> CreateAsync(CreateProfileModel data) {
-        var profile = await profileService.AddAsync(data);
+    public async Task<PersonModel> CreateAsync(CreatePersonModel data) {
+        var profile = await personService.AddAsync(data);
         
         var university = profile.UniversityId.HasValue
             ? await universityRepository.GetAsync(profile.UniversityId.Value)
@@ -54,8 +54,8 @@ public class ProfileController(
     }
 
     [HttpPut]
-    public async Task<ProfileModel> UpdateAsync(UpdateProfileModel data) {
-        var profile = await profileService.UpdateAsync(data);
+    public async Task<PersonModel> UpdateAsync(UpdatePersonModel data) {
+        var profile = await personService.UpdateAsync(data);
 
         var university = profile.UniversityId.HasValue
             ? await universityRepository.GetAsync(profile.UniversityId.Value)
@@ -66,10 +66,12 @@ public class ProfileController(
     
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteAsync(Guid id) {
-        var profile = await profileRepository.GetRequiredAsync(id);
-        await profileRepository.DeleteAsync(profile);
+        var profile = await personRepository.GetRequiredAsync(id);
+        await personRepository.DeleteAsync(profile);
         return NoContent(); // 204 (Ok)
     }
     
     
 }
+
+//TODO: criar entidade Country? ou apenas Local?

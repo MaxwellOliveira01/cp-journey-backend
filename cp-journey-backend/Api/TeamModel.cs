@@ -6,7 +6,7 @@ public class TeamModel {
     
     public string Name { get; set; }
     
-    public List<ProfileModel> Members { get; set; }
+    public List<PersonModel> Members { get; set; }
     
     public UniversityModel? University { get; set; }
     

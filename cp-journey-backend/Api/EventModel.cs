@@ -15,5 +15,5 @@ public class EventModel {
 }
 
 public class EventFullModel : EventModel {
-    private List<ProfileModel> Students { get; set; }
+    private List<PersonModel> Students { get; set; }
 }
