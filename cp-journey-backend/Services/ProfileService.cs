@@ -24,7 +24,7 @@ public class ProfileService(
             UniversityId = data.UniversityId
         };
         
-        await profileRepository.Add(profile);
+        await profileRepository.AddAsync(profile);
         return profile;
     }
 

@@ -9,18 +9,22 @@ namespace cp_journey_backend.Controllers;
 [Route("university")]
 public class UniversityController(
     IUniversityRepository universityRepository,
+    IUniversityService universityService,
     ModelConverter modelConverter
 ) : ControllerBase {
     
     [HttpGet("{id}")]
     public async Task<UniversityModel> Get(Guid id) {
-        var university = await universityRepository.GetRequired(id);
+        var university = await universityRepository.GetAsyncRequired(id);
         return modelConverter.ToModel(university);
     }
 
-    //[HttpPost]
-    //public async Task<UniversityModel> Create(CreateUniverstyModel data) {
-                
-    //}
+    [HttpPost]
+    public async Task<UniversityModel> Create(CreateUniversityModel data) {
+        var university = await universityService.Add(data);
+        return modelConverter.ToModel(university);
+    }
+    
+    
     
 }
