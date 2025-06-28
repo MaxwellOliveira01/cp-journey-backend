@@ -24,8 +24,6 @@ public class ProfileController(
         
         return modelConverter.ToModel(profile, university);
     }
-    
-    
 
     [HttpGet("list")] // TODO: implement pagination
     public async Task<List<ProfileModel>> ListAsync() {
@@ -46,7 +44,7 @@ public class ProfileController(
     
     [HttpPost]
     public async Task<ProfileModel> CreateAsync(CreateProfileModel data) {
-        var profile = await profileService.Add(data);
+        var profile = await profileService.AddAsync(data);
         
         var university = profile.UniversityId.HasValue
             ? await universityRepository.GetAsync(profile.UniversityId.Value)
@@ -54,5 +52,24 @@ public class ProfileController(
         
         return modelConverter.ToModel(profile, university);
     }
+
+    [HttpPut]
+    public async Task<ProfileModel> UpdateAsync(UpdateProfileModel data) {
+        var profile = await profileService.UpdateAsync(data);
+
+        var university = profile.UniversityId.HasValue
+            ? await universityRepository.GetAsync(profile.UniversityId.Value)
+            : null;
+        
+        return modelConverter.ToModel(profile, university);
+    }
+    
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteAsync(Guid id) {
+        var profile = await profileRepository.GetRequiredAsync(id);
+        await profileRepository.DeleteAsync(profile);
+        return NoContent(); // 204 (Ok)
+    }
+    
     
 }

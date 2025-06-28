@@ -12,9 +12,11 @@ public interface IProfileRepository {
     Task AddAsync(Profile profile);
 
     Task DeleteAsync(Profile profile);
-
-    Task<List<Profile>> ListAsync();
     
+    Task<List<Profile>> ListAsync();
+
+    Task UpdateAsync(Profile profile);
+
 }
 
 public class ProfileRepository(AppDbContext appDbContext) : IProfileRepository {
@@ -45,6 +47,11 @@ public class ProfileRepository(AppDbContext appDbContext) : IProfileRepository {
     public async Task<List<Profile>> ListAsync() {
         const string sql = "SELECT * FROM Profiles";
         return await appDbContext.Profiles.FromSqlRaw(sql).ToListAsync();
+    }
+    
+    public async Task UpdateAsync(Profile entity) {
+        const string sql = "UPDATE Profiles SET Name = {1}, Handle = {2}, UniversityId = {3} WHERE Id = {0}";
+        await appDbContext.Database.ExecuteSqlRawAsync(sql, entity.Id, entity.Name, entity.Handle, entity.UniversityId);
     }
 
 }
