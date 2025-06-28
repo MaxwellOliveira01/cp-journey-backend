@@ -18,27 +18,27 @@ public class PersonService(
 
     public async Task<Person> AddAsync(CreatePersonModel data) {
         
-        var profile = new Person {
+        var person = new Person {
             Id = Guid.NewGuid(),
             Name = data.Name,
             Handle = data.Handle,
             UniversityId = data.UniversityId
         };
         
-        await personRepository.AddAsync(profile);
-        return profile;
+        await personRepository.AddAsync(person);
+        return person;
     }
     
     public async Task<Person> UpdateAsync(UpdatePersonModel data) {
-        var profile = await personRepository.GetRequiredAsync(data.Id);
+        var person = await personRepository.GetRequiredAsync(data.Id);
         
-        profile.Name = data.Name;
-        profile.Handle = data.Handle;
-        profile.UniversityId = data.UniversityId;
+        person.Name = data.Name;
+        person.Handle = data.Handle;
+        person.UniversityId = data.UniversityId;
 
-        await personRepository.UpdateAsync(profile);
+        await personRepository.UpdateAsync(person);
         
-        return profile;
+        return person;
     }
 
 }
