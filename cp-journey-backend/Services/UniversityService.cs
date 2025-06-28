@@ -5,14 +5,15 @@ using cp_journey_backend.Repositories;
 namespace cp_journey_backend.Services;
 
 public interface IUniversityService {
-    Task<University> Add(CreateUniversityModel university);
+    Task<University> AddAsync(CreateUniversityModel university);
+    Task<University> UpdateAsync(UpdateUniversityModel university);
 }
 
 public class UniversityService(
     IUniversityRepository universityRepository
 ) : IUniversityService {
 
-    public async Task<University> Add(CreateUniversityModel data) {
+    public async Task<University> AddAsync(CreateUniversityModel data) {
         
         var university = new University {
             Id = Guid.NewGuid(),
@@ -21,6 +22,16 @@ public class UniversityService(
         };
 
         await universityRepository.AddAsync(university);
+        return university;
+    }
+    
+    public async Task<University> UpdateAsync(UpdateUniversityModel data) {
+        var university = await universityRepository.GetRequiredAsync(data.Id);
+        
+        university.Name = data.Name;
+        university.Alias = data.Alias;
+
+        await universityRepository.UpdateAsync(university);
         return university;
     }
     

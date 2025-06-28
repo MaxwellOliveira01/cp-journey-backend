@@ -4,10 +4,18 @@ using Microsoft.EntityFrameworkCore;
 namespace cp_journey_backend.Repositories;
 
 public interface IUniversityRepository {
-    Task AddAsync(University entity);
-    void DeleteAsync(University entity);
+    
     Task<University?> GetAsync(Guid id);
-    Task<University> GetAsyncRequired(Guid id);
+    
+    Task<University> GetRequiredAsync(Guid id);
+    
+    Task AddAsync(University entity);
+    
+    Task DeleteAsync(University entity);
+    
+    Task<List<University>> ListAsync();
+    
+    Task UpdateAsync(University entity);
 }
 
 public class UniversityRepository(AppDbContext appDbContext) : IUniversityRepository {
@@ -16,9 +24,9 @@ public class UniversityRepository(AppDbContext appDbContext) : IUniversityReposi
         await appDbContext.Database.ExecuteSqlRawAsync(sql, entity.Id, entity.Name, entity.Alias);
     }
 
-    public void DeleteAsync(University entity) {
+    public Task DeleteAsync(University entity) {
         var sql = "DELETE FROM Universities WHERE Id = {0}";
-        appDbContext.Database.ExecuteSqlRaw(sql, entity.Id);
+        return appDbContext.Database.ExecuteSqlRawAsync(sql, entity.Id);
     }
 
     public async Task<University?> GetAsync(Guid id) {
@@ -26,12 +34,22 @@ public class UniversityRepository(AppDbContext appDbContext) : IUniversityReposi
         return await appDbContext.Universities.FromSqlRaw(sql, id).AsNoTracking().FirstOrDefaultAsync();
     }
 
-    public async Task<University> GetAsyncRequired(Guid id) {
+    public async Task<University> GetRequiredAsync(Guid id) {
         var university = await GetAsync(id);
         if (university == null) {
             throw new KeyNotFoundException($"University with ID {id} not found.");
         }
         return university;
+    }
+    
+    public async Task UpdateAsync(University entity) {
+        const string sql = "UPDATE Universities SET Name = {1}, Alias = {2} WHERE Id = {0}";
+        await appDbContext.Database.ExecuteSqlRawAsync(sql, entity.Id, entity.Name, entity.Alias);
+    }
+    
+    public async Task<List<University>> ListAsync() {
+        const string sql = "SELECT * FROM Universities";
+        return await appDbContext.Universities.FromSqlRaw(sql).ToListAsync();
     }
 
 }
