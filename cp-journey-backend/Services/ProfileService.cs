@@ -25,8 +25,6 @@ public class ProfileService(
         };
         
         await profileRepository.Add(profile);
-        await profileRepository.SaveChangesAsync();
-        
         return profile;
     }
 
