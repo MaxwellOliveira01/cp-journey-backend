@@ -3,15 +3,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace cp_journey_backend.Entities;
 
-public class University : IEntity {
+public class TeamMember : IEntity {
     
     [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
     public Guid Id { get; set; }
     
-    [MaxLength(200)]
-    public string Name { get; set; }
+    public Guid TeamId { get; set; }
+    public Team Team { get; set; }
     
-    [MaxLength(20)]
-    public string Alias { get; set; }
+    public Guid ProfileId { get; set; }
+    public Profile Profile { get; set; }
     
 }

@@ -15,16 +15,24 @@ public class ProfileController(
 : ControllerBase {
 
     [HttpGet("{id}")]
-    public async Task<ProfileModel> Get(string id) {
-        var profile = (await profileRepository.Get(id))!;
-        var university = await universityRepository.Get(profile.UniversityId);
+    public async Task<ProfileModel> Get(Guid id) {
+        var profile = await profileRepository.GetRequired(id);
+        
+        var university = profile.UniversityId.HasValue 
+            ? await universityRepository.Get(profile.UniversityId.Value)
+            : null;
+        
         return modelConverter.ToModel(profile, university);
     }
     
     [HttpPost]
     public async Task<ProfileModel> Create(CreateProfileModel data) {
         var profile = await profileService.Add(data);
-        var university = await universityRepository.Get(data.UniversityId);
+        
+        var university = profile.UniversityId.HasValue
+            ? await universityRepository.Get(profile.UniversityId.Value)
+            : null;
+        
         return modelConverter.ToModel(profile, university);
     }
     

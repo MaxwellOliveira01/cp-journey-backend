@@ -1,30 +1,16 @@
 using cp_journey_backend.Entities;
-using cp_journey_backend.Persistence;
+using cp_journey_backend.Services;
 
 namespace cp_journey_backend.Repositories;
 
-public interface IProfileRepository {
-    
-    Task Add(Profile profile);
-
-    Task Update(Profile profile);
-    
-    Task<Profile?> Get(string id);
-    
-    Task Delete(string id);
-
+public interface IProfileRepository : IDefaultEntityRepository<Profile> {
+    // nothing yet
 }
 
-public class InMemoryProfileRepository(InMemoryDb dbContext) : IProfileRepository {
-    public Task Add(Profile profile)
-        => dbContext.AddProfile(profile);
+public class ProfileRepository(AppDbContext appDbContext) 
+    : DefaultEntityRepository<Profile>(appDbContext)
+        , IProfileRepository {
 
-    public Task Update(Profile profile) 
-        => dbContext.UpdateProfile(profile);
-
-    public Task<Profile?> Get(string id)
-        => dbContext.GetProfile(id);
-
-    public Task Delete(string id)
-        => dbContext.DeleteProfile(id);
+    // nothing different yet
+    
 }

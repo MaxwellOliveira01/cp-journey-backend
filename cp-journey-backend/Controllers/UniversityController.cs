@@ -13,8 +13,8 @@ public class UniversityController(
 ) : ControllerBase {
     
     [HttpGet("{id}")]
-    public async Task<UniversityModel> Get(string id) {
-        var university = await universityRepository.Get(id);
+    public async Task<UniversityModel> Get(Guid id) {
+        var university = await universityRepository.GetRequired(id);
         return modelConverter.ToModel(university);
     }
 

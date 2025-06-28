@@ -2,7 +2,7 @@ namespace cp_journey_backend.Api;
 
 public class ProfileModel {
 
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     
     public string Name { get; set; }
     
@@ -28,13 +28,12 @@ public class CreateProfileModel {
     
     public string Handle { get; set; }
 
-    // preciso mesmo do '?' aqui?
-    public string? UniversityId { get; set; }
+    public Guid? UniversityId { get; set; }
     
 }
 
 public class UpdateProfileModel : CreateProfileModel {
     
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     
 }

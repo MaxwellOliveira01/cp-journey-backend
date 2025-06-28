@@ -2,7 +2,7 @@ namespace cp_journey_backend.Api;
 
 public class UniversityModel {
     
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     
     public string Name { get; set; }
     
@@ -30,6 +30,6 @@ public class CreateUniversityModel {
 
 public class UpdateUniversityModel : CreateUniversityModel {
     
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     
 }

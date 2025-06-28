@@ -1,22 +1,16 @@
 using cp_journey_backend.Entities;
-using cp_journey_backend.Persistence;
+using cp_journey_backend.Services;
 
 namespace cp_journey_backend.Repositories;
 
-public interface IUniversityRepository {
-    Task<University?> Get(string id);
+public interface IUniversityRepository : IDefaultEntityRepository<University> {
+    // nothing yet
 }
 
-public class InMemoryUniversityRepository(InMemoryDb dbContext) : IUniversityRepository {
-    public Task Add(University university)
-        => dbContext.AddUniversity(university);
+public class UniversityRepository(AppDbContext appDbContext)
+    : DefaultEntityRepository<University>(appDbContext)
+        , IUniversityRepository {
 
-    public Task Update(University university) 
-        => dbContext.UpdateUniversity(university);
+    // nothing different yet
 
-    public Task<University?> Get(string id)
-        => dbContext.GetUniversity(id);
-
-    public Task Delete(string id)
-        => dbContext.DeleteUniversity(id);
 }

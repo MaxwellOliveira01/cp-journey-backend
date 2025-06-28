@@ -14,15 +14,11 @@ public class ModelConverter {
             Id = profile.Id,
             Name = profile.Name,
             Handle = profile.Handle,
-            University = ToModel(university),
+            University = university != null ? ToModel(university) : null,
         };
     }
 
-    public UniversityModel? ToModel(University? university) {
-        if (university == null) {
-            return null;
-        }
-        
+    public UniversityModel ToModel(University university) {
         return new UniversityModel {
             Id = university.Id,
             Name = university.Name,

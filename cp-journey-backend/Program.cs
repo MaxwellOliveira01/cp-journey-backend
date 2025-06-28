@@ -1,5 +1,4 @@
 using cp_journey_backend.Entities;
-using cp_journey_backend.Persistence;
 using cp_journey_backend.Repositories;
 using cp_journey_backend.Services;
 using Microsoft.EntityFrameworkCore;
@@ -12,11 +11,11 @@ builder.Services.AddControllers();
 
 builder.Services.AddScoped<IProfileService, ProfileService>();
 
-builder.Services.AddScoped<IProfileRepository, InMemoryProfileRepository>();
-builder.Services.AddScoped<IUniversityRepository, InMemoryUniversityRepository>();
+builder.Services.AddScoped<IProfileRepository, ProfileRepository>();
+builder.Services.AddScoped<IUniversityRepository, UniversityRepository>();
+builder.Services.AddScoped<ITeamRepository, TeamRepository>();
 
 builder.Services.AddSingleton<ModelConverter>();
-builder.Services.AddSingleton<InMemoryDb>();
 
 builder.Configuration.AddUserSecrets<Program>();
 

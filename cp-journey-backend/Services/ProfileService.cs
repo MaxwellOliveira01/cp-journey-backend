@@ -16,13 +16,17 @@ public class ProfileService(
 ) : IProfileService {
 
     public async Task<Profile> Add(CreateProfileModel data) {
-        var profile = new Profile() {
-            Id = Guid.NewGuid().ToString(), // maybe auto-generate will be better
+        
+        var profile = new Profile {
+            Id = Guid.NewGuid(),
             Name = data.Name,
             Handle = data.Handle,
             UniversityId = data.UniversityId
         };
+        
         await profileRepository.Add(profile);
+        await profileRepository.SaveChangesAsync();
+        
         return profile;
     }
 
