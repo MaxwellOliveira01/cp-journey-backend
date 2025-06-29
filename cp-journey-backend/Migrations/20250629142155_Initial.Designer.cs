@@ -11,7 +11,7 @@ using cp_journey_backend.Repositories;
 namespace cp_journey_backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250628012950_Initial")]
+    [Migration("20250629142155_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace cp_journey_backend.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.6");
 
-            modelBuilder.Entity("cp_journey_backend.Entities.Profile", b =>
+            modelBuilder.Entity("cp_journey_backend.Entities.Person", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("TEXT");
@@ -35,24 +35,24 @@ namespace cp_journey_backend.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("TeamId")
-                        .HasColumnType("TEXT");
-
                     b.Property<Guid?>("UniversityId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TeamId");
-
                     b.HasIndex("UniversityId");
 
-                    b.ToTable("Profiles");
+                    b.ToTable("Persons");
                 });
 
             modelBuilder.Entity("cp_journey_backend.Entities.Team", b =>
                 {
                     b.Property<Guid>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
                         .HasColumnType("TEXT");
 
                     b.Property<Guid?>("UniversityId")
@@ -67,18 +67,13 @@ namespace cp_journey_backend.Migrations
 
             modelBuilder.Entity("cp_journey_backend.Entities.TeamMember", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("ProfileId")
+                    b.Property<Guid>("PersonId")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("TeamId")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProfileId");
+                    b.HasKey("PersonId", "TeamId");
 
                     b.HasIndex("TeamId");
 
@@ -105,12 +100,8 @@ namespace cp_journey_backend.Migrations
                     b.ToTable("Universities");
                 });
 
-            modelBuilder.Entity("cp_journey_backend.Entities.Profile", b =>
+            modelBuilder.Entity("cp_journey_backend.Entities.Person", b =>
                 {
-                    b.HasOne("cp_journey_backend.Entities.Team", null)
-                        .WithMany("Members")
-                        .HasForeignKey("TeamId");
-
                     b.HasOne("cp_journey_backend.Entities.University", "University")
                         .WithMany()
                         .HasForeignKey("UniversityId");
@@ -129,24 +120,24 @@ namespace cp_journey_backend.Migrations
 
             modelBuilder.Entity("cp_journey_backend.Entities.TeamMember", b =>
                 {
-                    b.HasOne("cp_journey_backend.Entities.Profile", "Profile")
+                    b.HasOne("cp_journey_backend.Entities.Person", "Person")
                         .WithMany("Teams")
-                        .HasForeignKey("ProfileId")
+                        .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("cp_journey_backend.Entities.Team", "Team")
-                        .WithMany()
+                        .WithMany("Members")
                         .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Profile");
+                    b.Navigation("Person");
 
                     b.Navigation("Team");
                 });
 
-            modelBuilder.Entity("cp_journey_backend.Entities.Profile", b =>
+            modelBuilder.Entity("cp_journey_backend.Entities.Person", b =>
                 {
                     b.Navigation("Teams");
                 });

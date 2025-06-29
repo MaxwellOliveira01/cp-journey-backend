@@ -64,18 +64,13 @@ namespace cp_journey_backend.Migrations
 
             modelBuilder.Entity("cp_journey_backend.Entities.TeamMember", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("TEXT");
-
                     b.Property<Guid>("PersonId")
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("TeamId")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("PersonId");
+                    b.HasKey("PersonId", "TeamId");
 
                     b.HasIndex("TeamId");
 

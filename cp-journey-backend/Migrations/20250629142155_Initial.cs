@@ -25,10 +25,30 @@ namespace cp_journey_backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Persons",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
+                    Handle = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
+                    UniversityId = table.Column<Guid>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Persons", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Persons_Universities_UniversityId",
+                        column: x => x.UniversityId,
+                        principalTable: "Universities",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Teams",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
                     UniversityId = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
@@ -42,45 +62,19 @@ namespace cp_journey_backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Profiles",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
-                    Handle = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
-                    UniversityId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    TeamId = table.Column<Guid>(type: "TEXT", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Profiles", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Profiles_Teams_TeamId",
-                        column: x => x.TeamId,
-                        principalTable: "Teams",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Profiles_Universities_UniversityId",
-                        column: x => x.UniversityId,
-                        principalTable: "Universities",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "TeamMembers",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     TeamId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ProfileId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    PersonId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TeamMembers", x => x.Id);
+                    table.PrimaryKey("PK_TeamMembers", x => new { x.PersonId, x.TeamId });
                     table.ForeignKey(
-                        name: "FK_TeamMembers_Profiles_ProfileId",
-                        column: x => x.ProfileId,
-                        principalTable: "Profiles",
+                        name: "FK_TeamMembers_Persons_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "Persons",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -92,19 +86,9 @@ namespace cp_journey_backend.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Profiles_TeamId",
-                table: "Profiles",
-                column: "TeamId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Profiles_UniversityId",
-                table: "Profiles",
+                name: "IX_Persons_UniversityId",
+                table: "Persons",
                 column: "UniversityId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TeamMembers_ProfileId",
-                table: "TeamMembers",
-                column: "ProfileId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TeamMembers_TeamId",
@@ -124,7 +108,7 @@ namespace cp_journey_backend.Migrations
                 name: "TeamMembers");
 
             migrationBuilder.DropTable(
-                name: "Profiles");
+                name: "Persons");
 
             migrationBuilder.DropTable(
                 name: "Teams");
