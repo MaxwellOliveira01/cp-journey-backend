@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace cp_journey_backend.Controllers;
 
+[ApiController]
+[Route("teams")]
 public class TeamController(
     ITeamRepository teamRepository,
     ITeamService teamService,
