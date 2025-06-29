@@ -24,5 +24,13 @@ public class ModelConverter {
             Name = university.Name,
         };
     }
+
+    public TeamModel ToModel(Team team) {
+        return new TeamModel {
+            Id = team.Id,
+            Name = team.Name,
+        };
+    }
+    
     
 }
