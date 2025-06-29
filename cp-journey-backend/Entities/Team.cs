@@ -3,11 +3,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace cp_journey_backend.Entities;
 
-public class Team : IEntity {
+public class Team {
     
     [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
     public Guid Id { get; set; }
-    
+
     [MaxLength(100)]
     public string Name { get; set; }
     
