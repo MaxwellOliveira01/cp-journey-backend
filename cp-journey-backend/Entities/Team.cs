@@ -8,6 +8,9 @@ public class Team : IEntity {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
     public Guid Id { get; set; }
     
+    [MaxLength(100)]
+    public string Name { get; set; }
+    
     public Guid? UniversityId { get; set; }
     
     public University University { get; set; }
