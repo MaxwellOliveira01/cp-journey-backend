@@ -31,12 +31,12 @@ public class TeamRepository(AppDbContext appDbContext) : ITeamRepository {
         => await GetAsync(id) ?? throw new KeyNotFoundException($"Team with ID {id} not found."); 
 
     public async Task AddAsync(Team team) { 
-        const string sql = "INSERT INTO Teams (Id, UniversityId) VALUES ({0}, {1})";
-        await appDbContext.Database.ExecuteSqlRawAsync(sql, team.Id, team.UniversityId);
+        const string sql = "INSERT INTO Teams (Id, Name, UniversityId) VALUES ({0}, {1}, {2})";
+        await appDbContext.Database.ExecuteSqlRawAsync(sql, team.Id, team.Name, team.UniversityId);
         
         foreach (var member in team.Members) {
             const string memberSql = "INSERT INTO TeamMembers (TeamId, PersonId) VALUES ({0}, {1})";
-            await appDbContext.Database.ExecuteSqlRawAsync(memberSql, team.Id, member.PersonId);
+            await appDbContext.Database.ExecuteSqlRawAsync(memberSql, member.TeamId, member.PersonId);
         }
     }
 

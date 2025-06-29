@@ -13,5 +13,12 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<TeamMember> TeamMembers { get; set; }
 
     public DbSet<University> Universities { get; set; }
-    
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder) {
+        
+        modelBuilder.Entity<TeamMember>()
+            .HasKey(teamMember => new { teamMember.PersonId, teamMember.TeamId });
+        
+        base.OnModelCreating(modelBuilder);
+    }
 }
