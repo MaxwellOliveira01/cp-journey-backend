@@ -27,11 +27,11 @@ public class PersonRepository(AppDbContext appDbContext) : IPersonRepository {
     }
 
     public async Task<Person> GetRequiredAsync(Guid id) {
-        var profile = await GetAsync(id);
-        if (profile == null) {
+        var person = await GetAsync(id);
+        if (person == null) {
             throw new KeyNotFoundException($"Person with ID {id} not found.");
         }
-        return profile;
+        return person;
     }
     
     public async Task AddAsync(Person entity) {
