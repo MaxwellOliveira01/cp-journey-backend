@@ -18,8 +18,8 @@ public class UniversityController(
     [HttpGet("{id}")]
     public async Task<UniversityFullModel> Get(Guid id) {
         var university = await universityRepository.GetRequiredAsync(id);
-        var students = await personRepository.GetStudentsOfUniversity(id);
-        var teams = await teamRepository.GetTeamsOfUniversity(id);
+        var students = await personRepository.ListByUniversityAsync(id);
+        var teams = await teamRepository.ListByUniversityAsync(id);
         return modelConverter.ToFullModel(university, students, teams);
     }
 

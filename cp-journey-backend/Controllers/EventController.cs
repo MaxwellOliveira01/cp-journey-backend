@@ -17,7 +17,7 @@ public class EventController(
     [HttpGet("{id}")]
     public async Task<EventFullModel> Get(Guid id) {
         var ev = await eventRepository.GetRequiredAsync(id);
-        var participants = await personRepository.GetParticipantsOfEvent(ev.Id);
+        var participants = await personRepository.ListByEventAsync(ev.Id);
         return modelConverter.ToFullModel(ev, participants);
     }
 

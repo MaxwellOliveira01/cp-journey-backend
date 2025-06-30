@@ -24,8 +24,8 @@ public class PersonController(
             ? await universityRepository.GetAsync(profile.UniversityId.Value)
             : null;
         
-        var events = await eventsRepository.GetEventsOfUser(id);
-        var teams = await teamsRepository.GetTeamsOfUser(id);
+        var events = await eventsRepository.ListByUserAsync(id);
+        var teams = await teamsRepository.ListByUserAsync(id);
         return modelConverter.ToFullModel(profile, university, teams, events);
     }
 

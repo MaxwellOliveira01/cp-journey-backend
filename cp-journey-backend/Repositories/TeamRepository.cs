@@ -18,9 +18,9 @@ public interface ITeamRepository  {
 
     Task UpdateAsync(Team team);
 
-    Task<List<Team>> GetTeamsOfUser(Guid userId);
+    Task<List<Team>> ListByUserAsync(Guid userId);
 
-    Task<List<Team>> GetTeamsOfUniversity(Guid universityId);
+    Task<List<Team>> ListByUniversityAsync(Guid universityId);
 
 
 }
@@ -68,14 +68,14 @@ public class TeamRepository(AppDbContext appDbContext) : ITeamRepository {
         }
     }
     
-    public async Task<List<Team>> GetTeamsOfUser(Guid userId) {
+    public async Task<List<Team>> ListByUserAsync(Guid userId) {
         const string sql = "SELECT t.* FROM Teams t " +
                            "JOIN TeamMembers tm ON t.Id = tm.TeamId " +
                            "WHERE tm.PersonId = {0}";
         return await appDbContext.Teams.FromSqlRaw(sql, userId).ToListAsync();
     }
     
-    public async Task<List<Team>> GetTeamsOfUniversity(Guid universityId) {
+    public async Task<List<Team>> ListByUniversityAsync(Guid universityId) {
         const string sql = "SELECT * FROM Teams WHERE UniversityId = {0}";
         return await appDbContext.Teams.FromSqlRaw(sql, universityId).ToListAsync();
     }

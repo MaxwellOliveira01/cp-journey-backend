@@ -17,9 +17,9 @@ public interface IPersonRepository {
 
     Task UpdateAsync(Person person);
 
-    Task<List<Person>> GetStudentsOfUniversity(Guid universityId);
+    Task<List<Person>> ListByUniversityAsync(Guid universityId);
 
-    Task<List<Person>> GetParticipantsOfEvent(Guid eventId);
+    Task<List<Person>> ListByEventAsync(Guid eventId);
 
     Task<List<Person>> ListByTeamAsync(Guid teamId);
 
@@ -60,12 +60,12 @@ public class PersonRepository(AppDbContext appDbContext) : IPersonRepository {
         await appDbContext.Database.ExecuteSqlRawAsync(sql, entity.Id, entity.Name, entity.Handle, entity.UniversityId);
     }
     
-    public async Task<List<Person>> GetStudentsOfUniversity(Guid universityId) {
+    public async Task<List<Person>> ListByUniversityAsync(Guid universityId) {
         const string sql = "SELECT * FROM Persons WHERE UniversityId = {0}";
         return await appDbContext.Persons.FromSqlRaw(sql, universityId).ToListAsync();
     }
     
-    public async Task<List<Person>> GetParticipantsOfEvent(Guid eventId) {
+    public async Task<List<Person>> ListByEventAsync(Guid eventId) {
         const string sql = @"
             SELECT p.* 
             FROM Persons p
