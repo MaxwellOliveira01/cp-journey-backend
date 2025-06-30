@@ -9,12 +9,11 @@ public class ModelConverter {
         
     }
     
-    public PersonModel ToModel(Person person, University? university) {
+    public PersonModel ToModel(Person person) {
         return new PersonModel {
             Id = person.Id,
             Name = person.Name,
             Handle = person.Handle,
-            University = university != null ? ToModel(university) : null,
         };
     }
 
@@ -59,7 +58,7 @@ public class ModelConverter {
             Id = university.Id,
             Name = university.Name,
             // Location = university.Location,
-            Students = students.ConvertAll(p => ToModel(p, university)).ToList(),
+            Students = students.ConvertAll(ToModel).ToList(),
             Teams = teams.ConvertAll(ToModel).ToList(),
             // Contests = contests.Select(c => new ContestModel {
             //     Id = c.Id,
@@ -78,7 +77,7 @@ public class ModelConverter {
             End = ev.End,
             Description = ev.Description,
             WebsiteUrl = ev.WebsiteUrl,
-            Participants = participants.ConvertAll(p => ToModel(p, null)).ToList(),
+            Participants = participants.ConvertAll(ToModel).ToList(),
         };
     }
     
@@ -86,7 +85,7 @@ public class ModelConverter {
         return new TeamFullModel {
             Id = team.Id,
             Name = team.Name,
-            Members = members.ConvertAll(p => ToModel(p, null)).ToList(),
+            Members = members.ConvertAll(ToModel).ToList(),
             University = university != null ? ToModel(university) : null,
             // Contests = team.Contests.Select(c => new ContestModel {
             //     Id = c.Id,

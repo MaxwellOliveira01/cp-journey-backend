@@ -31,41 +31,20 @@ public class PersonController(
 
     [HttpGet("list")] // TODO: implement pagination
     public async Task<List<PersonModel>> ListAsync() {
-        var profiles = await personRepository.ListAsync();
-        // Tudo isso aqui pq eu coloquei ProfileModel.UniversityModel
-        // e preciso de uma query a mais pra pegar esse dado
-        // TODO: tirar esse universityModel do ProfileModel
-        //    Ou fazer com um join dentro do repository e alterar o modelConverter
-        var tasks = profiles.Select(async p => {
-            var university = p.UniversityId.HasValue
-                ? await universityRepository.GetAsync(p.UniversityId.Value)
-                : null;
-            return modelConverter.ToModel(p, university);
-        });
-        var models = await Task.WhenAll(tasks);
-        return models.ToList();
+        var persons = await personRepository.ListAsync();
+        return persons.ConvertAll(modelConverter.ToModel);
     }
     
     [HttpPost]
     public async Task<PersonModel> CreateAsync(CreatePersonModel data) {
         var profile = await personService.AddAsync(data);
-        
-        var university = profile.UniversityId.HasValue
-            ? await universityRepository.GetAsync(profile.UniversityId.Value)
-            : null;
-        
-        return modelConverter.ToModel(profile, university);
+        return modelConverter.ToModel(profile);
     }
 
     [HttpPut]
     public async Task<PersonModel> UpdateAsync(UpdatePersonModel data) {
         var profile = await personService.UpdateAsync(data);
-
-        var university = profile.UniversityId.HasValue
-            ? await universityRepository.GetAsync(profile.UniversityId.Value)
-            : null;
-        
-        return modelConverter.ToModel(profile, university);
+        return modelConverter.ToModel(profile);
     }
     
     [HttpDelete("{id}")]
@@ -74,7 +53,6 @@ public class PersonController(
         await personRepository.DeleteAsync(profile);
         return NoContent(); // 204 (Ok)
     }
-    
     
 }
 

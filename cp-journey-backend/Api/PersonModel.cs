@@ -8,11 +8,17 @@ public class PersonModel {
     
     public string Handle { get; set; }
     
+}
+
+public class PersonSearchModel : PersonModel {
+    
     public UniversityModel? University { get; set; }
     
 }
 
 public class PersonFullModel : PersonModel {
+    
+    public UniversityModel? University { get; set; }
     
     public List<TeamModel> Teams { get; set; }
     
