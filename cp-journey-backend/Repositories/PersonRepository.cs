@@ -17,6 +17,8 @@ public interface IPersonRepository {
 
     Task UpdateAsync(Person person);
 
+    Task<List<Person>> GetStudentsOfUniversity(Guid universityId);
+
 }
 
 public class PersonRepository(AppDbContext appDbContext) : IPersonRepository {
@@ -52,6 +54,11 @@ public class PersonRepository(AppDbContext appDbContext) : IPersonRepository {
     public async Task UpdateAsync(Person entity) {
         const string sql = "UPDATE Persons SET Name = {1}, Handle = {2}, UniversityId = {3} WHERE Id = {0}";
         await appDbContext.Database.ExecuteSqlRawAsync(sql, entity.Id, entity.Name, entity.Handle, entity.UniversityId);
+    }
+    
+    public async Task<List<Person>> GetStudentsOfUniversity(Guid universityId) {
+        const string sql = "SELECT * FROM Persons WHERE UniversityId = {0}";
+        return await appDbContext.Persons.FromSqlRaw(sql, universityId).ToListAsync();
     }
 
 }

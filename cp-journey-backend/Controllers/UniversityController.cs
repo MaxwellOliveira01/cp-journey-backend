@@ -10,13 +10,17 @@ namespace cp_journey_backend.Controllers;
 public class UniversityController(
     IUniversityRepository universityRepository,
     IUniversityService universityService,
+    IPersonRepository personRepository,
+    ITeamRepository teamRepository,
     ModelConverter modelConverter
 ) : ControllerBase {
     
     [HttpGet("{id}")]
-    public async Task<UniversityModel> Get(Guid id) {
+    public async Task<UniversityFullModel> Get(Guid id) {
         var university = await universityRepository.GetRequiredAsync(id);
-        return modelConverter.ToModel(university);
+        var students = await personRepository.GetStudentsOfUniversity(id);
+        var teams = await teamRepository.GetTeamsOfUniversity(id);
+        return modelConverter.ToFullModel(university, students, teams);
     }
 
     [HttpPost]

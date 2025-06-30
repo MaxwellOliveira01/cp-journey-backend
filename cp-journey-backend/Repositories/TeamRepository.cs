@@ -20,6 +20,9 @@ public interface ITeamRepository  {
 
     Task<List<Team>> GetTeamsOfUser(Guid userId);
 
+    Task<List<Team>> GetTeamsOfUniversity(Guid universityId);
+
+
 }
 
 public class TeamRepository(AppDbContext appDbContext) : ITeamRepository {
@@ -70,6 +73,11 @@ public class TeamRepository(AppDbContext appDbContext) : ITeamRepository {
                            "JOIN TeamMembers tm ON t.Id = tm.TeamId " +
                            "WHERE tm.PersonId = {0}";
         return await appDbContext.Teams.FromSqlRaw(sql, userId).ToListAsync();
+    }
+    
+    public async Task<List<Team>> GetTeamsOfUniversity(Guid universityId) {
+        const string sql = "SELECT * FROM Teams WHERE UniversityId = {0}";
+        return await appDbContext.Teams.FromSqlRaw(sql, universityId).ToListAsync();
     }
     
 }

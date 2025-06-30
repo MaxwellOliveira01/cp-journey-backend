@@ -54,4 +54,21 @@ public class ModelConverter {
         };
     }
     
+    public UniversityFullModel ToFullModel(University university, List<Person> students, List<Team> teams /*,List<Contest> contests*/) {
+        return new UniversityFullModel {
+            Id = university.Id,
+            Name = university.Name,
+            // Location = university.Location,
+            Students = students.ConvertAll(p => ToModel(p, university)).ToList(),
+            Teams = teams.ConvertAll(ToModel).ToList(),
+            // Contests = contests.Select(c => new ContestModel {
+            //     Id = c.Id,
+            //     Name = c.Name,
+            //     Start = c.Start,
+            //     End = c.End
+            // }).ToList()
+        };
+    }
+    
+    
 }
