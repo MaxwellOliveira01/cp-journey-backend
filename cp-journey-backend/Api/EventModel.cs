@@ -2,18 +2,45 @@ namespace cp_journey_backend.Api;
 
 public class EventModel {
     
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     
     public string Name { get; set; }
     
     public string Location { get; set; }
     
-    public string StartDate { get; set; } // maybe datetime?
+    public DateTime? Start { get; set; }
 
-    public string EndDate { get; set; } // maybe dateTime?
+    public DateTime? End { get; set; }
+    
+    public string? Description { get; set; }
+    
+    public string? WebsiteUrl { get; set; }
     
 }
 
 public class EventFullModel : EventModel {
-    private List<PersonModel> Students { get; set; }
+    private List<PersonModel> Participants { get; set; }
+}
+
+public class EventCreateModel {
+    public string Name { get; set; }
+    
+    public string Location { get; set; }
+    
+    public DateTime Start { get; set; }
+    
+    public DateTime End { get; set; }
+    
+    public string? Description { get; set; }
+    
+    public string? WebsiteUrl { get; set; }
+    
+    public List<Guid> ParticipantIds { get; set; }
+    
+}
+
+public class EventUpdateModel : EventCreateModel {
+    
+    public Guid Id { get; set; }
+    
 }

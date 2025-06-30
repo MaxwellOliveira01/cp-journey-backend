@@ -12,10 +12,12 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<IPersonService, PersonService>();
 builder.Services.AddScoped<IUniversityService, UniversityService>();
 builder.Services.AddScoped<ITeamService, TeamService>();
+builder.Services.AddScoped<IEventService, EventService>();
 
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddScoped<IUniversityRepository, UniversityRepository>();
 builder.Services.AddScoped<ITeamRepository, TeamRepository>();
+builder.Services.AddScoped<IEventRepository, EventRepository>();
 
 builder.Services.AddSingleton<ModelConverter>();
 

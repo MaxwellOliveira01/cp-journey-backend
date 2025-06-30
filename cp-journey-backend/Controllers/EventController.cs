@@ -1,0 +1,46 @@
+using cp_journey_backend.Api;
+using cp_journey_backend.Repositories;
+using cp_journey_backend.Services;
+using Microsoft.AspNetCore.Mvc;
+
+namespace cp_journey_backend.Controllers;
+
+[ApiController]
+[Route("event")]
+public class EventController(
+    IEventRepository eventRepository,
+    IEventService eventService,
+    ModelConverter modelConverter
+) : ControllerBase {
+
+    [HttpGet("{id}")]
+    public async Task<EventModel> Get(Guid id) {
+        var ev = await eventRepository.GetRequiredAsync(id);
+        return modelConverter.ToModel(ev);
+    }
+
+    [HttpPost]
+    public async Task<EventModel> Create(EventCreateModel data) {
+        var ev = await eventService.AddAsync(data);
+        return modelConverter.ToModel(ev);
+    }
+
+    [HttpPut]
+    public async Task<EventModel> UpdateAsync(EventUpdateModel data) {
+        var ev = await eventService.UpdateAsync(data);
+        return modelConverter.ToModel(ev);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteAsync(Guid id) {
+        var ev = await eventRepository.GetRequiredAsync(id);
+        await eventRepository.DeleteAsync(ev);
+        return NoContent();
+    }
+
+    [HttpGet("list")] // TODO: implement pagination
+    public async Task<List<EventModel>> ListAsync() {
+        var events = await eventRepository.ListAsync();
+        return [..events.ConvertAll(modelConverter.ToModel)];
+    }
+}

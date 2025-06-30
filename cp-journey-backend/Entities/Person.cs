@@ -20,4 +20,6 @@ public class Person {
     
     public List<TeamMember> Teams { get; set; }
     
+    public List<EventParticipation> Events { get; set; }
+    
 }

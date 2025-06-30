@@ -32,5 +32,16 @@ public class ModelConverter {
         };
     }
     
+    public EventModel ToModel(Event ev) {
+        return new EventModel {
+            Id = ev.Id,
+            Name = ev.Name,
+            Start = ev.Start,
+            End = ev.End,
+            Description = ev.Description,
+            WebsiteUrl = ev.WebsiteUrl,
+        };
+    }
+    
     
 }

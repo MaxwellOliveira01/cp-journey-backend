@@ -13,11 +13,18 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<TeamMember> TeamMembers { get; set; }
 
     public DbSet<University> Universities { get; set; }
+    
+    public DbSet<Event> Events { get; set; }
+    
+    public DbSet<EventParticipation> EventParticipations { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         
         modelBuilder.Entity<TeamMember>()
-            .HasKey(teamMember => new { teamMember.PersonId, teamMember.TeamId });
+            .HasKey(tm => new { tm.PersonId, tm.TeamId });
+        
+        modelBuilder.Entity<EventParticipation>()
+            .HasKey(ep => new { ep.EventId, ep.PersonId });
         
         base.OnModelCreating(modelBuilder);
     }
