@@ -10,13 +10,15 @@ namespace cp_journey_backend.Controllers;
 public class EventController(
     IEventRepository eventRepository,
     IEventService eventService,
+    IPersonRepository personRepository,
     ModelConverter modelConverter
 ) : ControllerBase {
 
     [HttpGet("{id}")]
-    public async Task<EventModel> Get(Guid id) {
+    public async Task<EventFullModel> Get(Guid id) {
         var ev = await eventRepository.GetRequiredAsync(id);
-        return modelConverter.ToModel(ev);
+        var participants = await personRepository.GetParticipantsOfEvent(ev.Id);
+        return modelConverter.ToFullModel(ev, participants);
     }
 
     [HttpPost]

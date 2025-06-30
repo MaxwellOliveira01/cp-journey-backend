@@ -70,5 +70,16 @@ public class ModelConverter {
         };
     }
     
+    public EventFullModel ToFullModel(Event ev, List<Person> participants) {
+        return new EventFullModel {
+            Id = ev.Id,
+            Name = ev.Name,
+            Start = ev.Start,
+            End = ev.End,
+            Description = ev.Description,
+            WebsiteUrl = ev.WebsiteUrl,
+            Participants = participants.ConvertAll(p => ToModel(p, null)).ToList(),
+        };
+    }
     
 }

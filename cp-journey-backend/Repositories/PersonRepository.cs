@@ -19,6 +19,8 @@ public interface IPersonRepository {
 
     Task<List<Person>> GetStudentsOfUniversity(Guid universityId);
 
+    Task<List<Person>> GetParticipantsOfEvent(Guid eventId);
+
 }
 
 public class PersonRepository(AppDbContext appDbContext) : IPersonRepository {
@@ -60,5 +62,14 @@ public class PersonRepository(AppDbContext appDbContext) : IPersonRepository {
         const string sql = "SELECT * FROM Persons WHERE UniversityId = {0}";
         return await appDbContext.Persons.FromSqlRaw(sql, universityId).ToListAsync();
     }
-
+    
+    public async Task<List<Person>> GetParticipantsOfEvent(Guid eventId) {
+        const string sql = @"
+            SELECT p.* 
+            FROM Persons p
+            JOIN EventParticipations ep ON p.Id = ep.PersonId
+            WHERE ep.EventId = {0}";
+        return await appDbContext.Persons.FromSqlRaw(sql, eventId).ToListAsync();
+    }
+    
 }

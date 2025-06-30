@@ -19,7 +19,7 @@ public class EventModel {
 }
 
 public class EventFullModel : EventModel {
-    private List<PersonModel> Participants { get; set; }
+    public List<PersonModel> Participants { get; set; }
 }
 
 public class EventCreateModel {
