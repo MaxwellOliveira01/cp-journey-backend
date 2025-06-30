@@ -11,18 +11,22 @@ public class PersonController(
     IPersonService personService,
     IPersonRepository personRepository,
     IUniversityRepository universityRepository,
+    IEventRepository eventsRepository,
+    ITeamRepository teamsRepository,
     ModelConverter modelConverter)
 : ControllerBase {
 
     [HttpGet("{id}")]
-    public async Task<PersonModel> GetAsync(Guid id) {
+    public async Task<PersonFullModel> GetAsync(Guid id) {
         var profile = await personRepository.GetRequiredAsync(id);
         
         var university = profile.UniversityId.HasValue 
             ? await universityRepository.GetAsync(profile.UniversityId.Value)
             : null;
         
-        return modelConverter.ToModel(profile, university);
+        var events = await eventsRepository.GetEventsOfUser(id);
+        var teams = await teamsRepository.GetTeamsOfUser(id);
+        return modelConverter.ToFullModel(profile, university, teams, events);
     }
 
     [HttpGet("list")] // TODO: implement pagination

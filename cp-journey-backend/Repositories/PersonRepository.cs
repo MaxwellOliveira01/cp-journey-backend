@@ -22,7 +22,7 @@ public interface IPersonRepository {
 public class PersonRepository(AppDbContext appDbContext) : IPersonRepository {
     
     public async Task<Person?> GetAsync(Guid id) {
-        const string sql = "SELECT * FROM Profiles WHERE Id = {0}";
+        const string sql = "SELECT * FROM Persons WHERE Id = {0}";
         return await appDbContext.Persons.FromSqlRaw(sql, id).FirstOrDefaultAsync();
     }
 
@@ -50,7 +50,7 @@ public class PersonRepository(AppDbContext appDbContext) : IPersonRepository {
     }
     
     public async Task UpdateAsync(Person entity) {
-        const string sql = "UPDATE Profiles SET Name = {1}, Handle = {2}, UniversityId = {3} WHERE Id = {0}";
+        const string sql = "UPDATE Persons SET Name = {1}, Handle = {2}, UniversityId = {3} WHERE Id = {0}";
         await appDbContext.Database.ExecuteSqlRawAsync(sql, entity.Id, entity.Name, entity.Handle, entity.UniversityId);
     }
 

@@ -15,6 +15,8 @@ public interface IEventRepository {
     Task<List<Event>> ListAsync();
     
     Task UpdateAsync(Event entity);
+
+    Task<List<Event>> GetEventsOfUser(Guid userId);
 }
 
 public class EventRepository(AppDbContext appDbContext) : IEventRepository {
@@ -61,4 +63,12 @@ public class EventRepository(AppDbContext appDbContext) : IEventRepository {
         const string sql = "SELECT * FROM Events";
         return await appDbContext.Events.FromSqlRaw(sql).ToListAsync();
     }
+    
+    public async Task<List<Event>> GetEventsOfUser(Guid userId) {
+        const string sql = "SELECT e.* FROM Events e " +
+                           "JOIN EventParticipations ep ON e.Id = ep.EventId " +
+                           "WHERE ep.PersonId = {0}";
+        return await appDbContext.Events.FromSqlRaw(sql, userId).ToListAsync();
+    }
+    
 }

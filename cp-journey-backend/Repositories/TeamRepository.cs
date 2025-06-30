@@ -18,6 +18,8 @@ public interface ITeamRepository  {
 
     Task UpdateAsync(Team team);
 
+    Task<List<Team>> GetTeamsOfUser(Guid userId);
+
 }
 
 public class TeamRepository(AppDbContext appDbContext) : ITeamRepository {
@@ -61,6 +63,13 @@ public class TeamRepository(AppDbContext appDbContext) : ITeamRepository {
             const string memberSql = "INSERT INTO TeamMembers (TeamId, PersonId) VALUES ({0}, {1})";
             await appDbContext.Database.ExecuteSqlRawAsync(memberSql, team.Id, member.PersonId);
         }
-
     }
+    
+    public async Task<List<Team>> GetTeamsOfUser(Guid userId) {
+        const string sql = "SELECT t.* FROM Teams t " +
+                           "JOIN TeamMembers tm ON t.Id = tm.TeamId " +
+                           "WHERE tm.PersonId = {0}";
+        return await appDbContext.Teams.FromSqlRaw(sql, userId).ToListAsync();
+    }
+    
 }

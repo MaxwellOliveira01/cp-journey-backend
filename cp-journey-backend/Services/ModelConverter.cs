@@ -43,5 +43,15 @@ public class ModelConverter {
         };
     }
     
+    public PersonFullModel ToFullModel(Person person, University? university, List<Team> teams, List<Event> events) {
+        return new PersonFullModel {
+            Id = person.Id,
+            Name = person.Name,
+            Handle = person.Handle,
+            University = university != null ? ToModel(university) : null,
+            Teams = teams.ConvertAll(ToModel).ToList(),
+            Events = events.Select(ToModel).ToList(),
+        };
+    }
     
 }
