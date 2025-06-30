@@ -82,4 +82,19 @@ public class ModelConverter {
         };
     }
     
+    public TeamFullModel ToFullModel(Team team, University? university, List<Person> members) {
+        return new TeamFullModel {
+            Id = team.Id,
+            Name = team.Name,
+            Members = members.ConvertAll(p => ToModel(p, null)).ToList(),
+            University = university != null ? ToModel(university) : null,
+            // Contests = team.Contests.Select(c => new ContestModel {
+            //     Id = c.Id,
+            //     Name = c.Name,
+            //     Start = c.Start,
+            //     End = c.End
+            // }).ToList()
+        };
+    }
+    
 }

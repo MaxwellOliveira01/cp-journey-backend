@@ -10,13 +10,17 @@ namespace cp_journey_backend.Controllers;
 public class TeamController(
     ITeamRepository teamRepository,
     ITeamService teamService,
+    IPersonRepository personRepository,
+    IUniversityRepository universityRepository,
     ModelConverter modelConverter
 ) : ControllerBase {
     
     [HttpGet("{id}")]
-    public async Task<TeamModel> GetAsync(Guid id) {
+    public async Task<TeamFullModel> GetAsync(Guid id) {
         var team = await teamRepository.GetRequiredAsync(id);
-        return modelConverter.ToModel(team);
+        var members = await personRepository.ListByTeamAsync(id);
+        var university = team.UniversityId.HasValue ? await universityRepository.GetAsync(team.UniversityId.Value) : null;
+        return modelConverter.ToFullModel(team, university, members);
     }
     
     [HttpPost]

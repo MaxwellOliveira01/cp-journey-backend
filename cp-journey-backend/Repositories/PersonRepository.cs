@@ -21,6 +21,8 @@ public interface IPersonRepository {
 
     Task<List<Person>> GetParticipantsOfEvent(Guid eventId);
 
+    Task<List<Person>> ListByTeamAsync(Guid teamId);
+
 }
 
 public class PersonRepository(AppDbContext appDbContext) : IPersonRepository {
@@ -70,6 +72,15 @@ public class PersonRepository(AppDbContext appDbContext) : IPersonRepository {
             JOIN EventParticipations ep ON p.Id = ep.PersonId
             WHERE ep.EventId = {0}";
         return await appDbContext.Persons.FromSqlRaw(sql, eventId).ToListAsync();
+    }
+    
+    public async Task<List<Person>> ListByTeamAsync(Guid teamId) {
+        const string sql = @"
+            SELECT p.* 
+            FROM Persons p
+            JOIN TeamMembers tm ON p.Id = tm.PersonId
+            WHERE tm.TeamId = {0}";
+        return await appDbContext.Persons.FromSqlRaw(sql, teamId).ToListAsync();
     }
     
 }
