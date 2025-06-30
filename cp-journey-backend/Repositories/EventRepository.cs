@@ -24,7 +24,7 @@ public class EventRepository(AppDbContext appDbContext) : IEventRepository {
         await appDbContext.Database.ExecuteSqlRawAsync(sql, entity.Id, entity.Name, entity.Start, entity.End, entity.Description, entity.WebsiteUrl);
         
         foreach (var participant in entity.Participants) {
-            const string memberSql = "INSERT INTO EventParticipation (PersonId, EventId) VALUES ({0}, {1})";
+            const string memberSql = "INSERT INTO EventParticipations (PersonId, EventId) VALUES ({0}, {1})";
             await appDbContext.Database.ExecuteSqlRawAsync(memberSql, participant.PersonId, participant.EventId);
         }
         
@@ -47,11 +47,11 @@ public class EventRepository(AppDbContext appDbContext) : IEventRepository {
         const string sql = "UPDATE Events SET Name = {1}, Start = {2}, End = {3}, Description = {4}, WebsiteUrl = {5} WHERE Id = {0}";
         await appDbContext.Database.ExecuteSqlRawAsync(sql, entity.Id, entity.Name, entity.Start, entity.End, entity.Description, entity.WebsiteUrl);
         
-        const string deleteParticipantsSql = "DELETE FROM EventParticipation WHERE EventId = {0}";
+        const string deleteParticipantsSql = "DELETE FROM EventParticipations WHERE EventId = {0}";
         await appDbContext.Database.ExecuteSqlRawAsync(deleteParticipantsSql, entity.Id);
         
         foreach (var participant in entity.Participants) {
-            const string memberSql = "INSERT INTO EventParticipation (PersonId, EventId) VALUES ({0}, {1})";
+            const string memberSql = "INSERT INTO EventParticipations (PersonId, EventId) VALUES ({0}, {1})";
             await appDbContext.Database.ExecuteSqlRawAsync(memberSql, participant.PersonId, participant.EventId);
         }
         
