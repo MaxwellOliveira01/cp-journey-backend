@@ -18,6 +18,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     
     public DbSet<EventParticipation> EventParticipations { get; set; }
 
+    public DbSet<Local> Locals { get; set; }
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         
         modelBuilder.Entity<TeamMember>()

@@ -23,6 +23,10 @@ public class Event {
     
     public List<EventParticipation> Participants { get; set; }
     
+    public Guid? LocalId { get; set; }
+    
+    public Local? Local { get; set; }
+    
 }
 
 // refazer migration pra tornar uns campos daqui nulos

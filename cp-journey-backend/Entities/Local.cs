@@ -3,19 +3,19 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace cp_journey_backend.Entities;
 
-public class University {
+public class Local {
     
     [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
     public Guid Id { get; set; }
     
-    [MaxLength(200)]
-    public string Name { get; set; }
+    public string City { get; set; }
     
-    [MaxLength(20)]
-    public string Alias { get; set; }
+    public string State { get; set; }
     
-    public Guid? LocalId { get; set; }
+    public string Country { get; set; }
     
-    public Local? Local { get; set; }
+    public List<Event> Events { get; set; }
+    
+    public List<University> Universities { get; set; }
     
 }
