@@ -6,8 +6,6 @@ public class EventModel {
     
     public string Name { get; set; }
     
-    public string Location { get; set; }
-    
     public DateTime? Start { get; set; }
 
     public DateTime? End { get; set; }
@@ -19,13 +17,14 @@ public class EventModel {
 }
 
 public class EventFullModel : EventModel {
+    
+    public LocalModel? Local { get; set; }
+    
     public List<PersonModel> Participants { get; set; }
 }
 
 public class EventCreateModel {
     public string Name { get; set; }
-    
-    public string Location { get; set; }
     
     public DateTime Start { get; set; }
     
@@ -34,6 +33,8 @@ public class EventCreateModel {
     public string? Description { get; set; }
     
     public string? WebsiteUrl { get; set; }
+    
+    public Guid? LocalId { get; set; }
     
     public List<Guid> ParticipantIds { get; set; }
     

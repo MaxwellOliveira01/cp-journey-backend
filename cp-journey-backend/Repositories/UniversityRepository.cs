@@ -19,9 +19,10 @@ public interface IUniversityRepository {
 }
 
 public class UniversityRepository(AppDbContext appDbContext) : IUniversityRepository {
+    
     public async Task AddAsync(University entity) {
-        var sql = "INSERT INTO Universities (Id, Name, Alias) VALUES ({0}, {1}, {2})";
-        await appDbContext.Database.ExecuteSqlRawAsync(sql, entity.Id, entity.Name, entity.Alias);
+        var sql = "INSERT INTO Universities (Id, Name, Alias, LocalId) VALUES ({0}, {1}, {2}, {3})";
+        await appDbContext.Database.ExecuteSqlRawAsync(sql, entity.Id, entity.Name, entity.Alias, entity.LocalId);
     }
 
     public Task DeleteAsync(University entity) {
@@ -43,8 +44,8 @@ public class UniversityRepository(AppDbContext appDbContext) : IUniversityReposi
     }
     
     public async Task UpdateAsync(University entity) {
-        const string sql = "UPDATE Universities SET Name = {1}, Alias = {2} WHERE Id = {0}";
-        await appDbContext.Database.ExecuteSqlRawAsync(sql, entity.Id, entity.Name, entity.Alias);
+        const string sql = "UPDATE Universities SET Name = {1}, Alias = {2}, LocalId = {3} WHERE Id = {0}";
+        await appDbContext.Database.ExecuteSqlRawAsync(sql, entity.Id, entity.Name, entity.Alias, entity.LocalId);
     }
     
     public async Task<List<University>> ListAsync() {

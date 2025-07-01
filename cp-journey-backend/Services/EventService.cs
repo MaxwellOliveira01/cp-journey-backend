@@ -10,44 +10,42 @@ public interface IEventService {
 }
 
 public class EventService(
-    IEventRepository eventRepository
+    IEventRepository eventRepository,
+    ILocalRepository localRepository
 ) : IEventService {
 
     public async Task<Event> AddAsync(EventCreateModel data) {
-        
-        var ev = new Event {
-            Id = Guid.NewGuid(),
-            Name = data.Name,
-            Start = data.Start,
-            End = data.End,
-            Description = data.Description,
-            WebsiteUrl = data.WebsiteUrl
-        };
-
-        ev.Participants = (data.ParticipantIds ?? []).Select(p => new EventParticipation {
-            PersonId = p,
-            EventId = ev.Id
-        }).ToList();
-        
+        var ev = new Event { Id = Guid.NewGuid() };
+        await updateFields(ev, data);
         await eventRepository.AddAsync(ev);
         return ev;
     }
 
     public async Task<Event> UpdateAsync(EventUpdateModel data) {
         var ev = await eventRepository.GetRequiredAsync(data.Id);
+        await updateFields(ev, data);
+        await eventRepository.UpdateAsync(ev);
+        return ev;
+    }
 
+    private async Task updateFields(Event ev, EventCreateModel data) {
+        
+        var local = data.LocalId.HasValue
+            ? await localRepository.GetRequiredAsync(data.LocalId.Value)
+            : null;
+        
         ev.Name = data.Name;
         ev.Start = data.Start;
         ev.End = data.End;
         ev.Description = data.Description;
         ev.WebsiteUrl = data.WebsiteUrl;
+        ev.LocalId = data.LocalId;
+        ev.Local = local;
 
         ev.Participants = (data.ParticipantIds ?? []).Select(p => new EventParticipation {
             PersonId = p,
             EventId = ev.Id
         }).ToList();
-
-        await eventRepository.UpdateAsync(ev);
-        return ev;
     }
+    
 }

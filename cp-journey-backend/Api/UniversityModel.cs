@@ -6,11 +6,13 @@ public class UniversityModel {
     
     public string Name { get; set; }
     
-    public string Location { get; set; }
+    public string Alias { get; set; }
     
 }
 
 public class UniversityFullModel : UniversityModel {
+    
+    public LocalModel? Local { get; set; }
     
     public List<PersonModel> Students { get; set; }
     
@@ -25,6 +27,8 @@ public class CreateUniversityModel {
     public string Name { get; set; }
     
     public string Alias { get; set; }
+    
+    public Guid? LocalId { get; set; }
     
 }
 

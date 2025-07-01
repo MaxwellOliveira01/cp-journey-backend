@@ -22,8 +22,12 @@ public interface IEventRepository {
 public class EventRepository(AppDbContext appDbContext) : IEventRepository {
     
     public async Task AddAsync(Event entity) {
-        const string sql = "INSERT INTO Events (Id, Name, Start, End, Description, WebsiteUrl) VALUES ({0}, {1}, {2}, {3}, {4}, {5})";
-        await appDbContext.Database.ExecuteSqlRawAsync(sql, entity.Id, entity.Name, entity.Start, entity.End, entity.Description, entity.WebsiteUrl);
+        
+        const string sql = "INSERT INTO Events (Id, Name, Start, End, " +
+                           "Description, WebsiteUrl, LocalId) VALUES ({0}, {1}, {2}, {3}, {4}, {5}, {6})";
+        
+        await appDbContext.Database.ExecuteSqlRawAsync(sql, entity.Id, entity.Name, entity.Start, entity.End, 
+            entity.Description, entity.WebsiteUrl, entity.LocalId);
         
         foreach (var participant in entity.Participants) {
             const string memberSql = "INSERT INTO EventParticipations (PersonId, EventId) VALUES ({0}, {1})";
@@ -46,8 +50,11 @@ public class EventRepository(AppDbContext appDbContext) : IEventRepository {
         => await GetAsync(id) ?? throw new KeyNotFoundException($"Event with ID {id} not found.");
 
     public async Task UpdateAsync(Event entity) {
-        const string sql = "UPDATE Events SET Name = {1}, Start = {2}, End = {3}, Description = {4}, WebsiteUrl = {5} WHERE Id = {0}";
-        await appDbContext.Database.ExecuteSqlRawAsync(sql, entity.Id, entity.Name, entity.Start, entity.End, entity.Description, entity.WebsiteUrl);
+        const string sql = "UPDATE Events SET Name = {1}, Start = {2}, End = {3}," +
+                           "Description = {4}, WebsiteUrl = {5}, LocalId = {6} WHERE Id = {0}";
+        
+        await appDbContext.Database.ExecuteSqlRawAsync(sql, entity.Id, entity.Name, entity.Start, entity.End, 
+            entity.Description, entity.WebsiteUrl, entity.LocalId);
         
         const string deleteParticipantsSql = "DELETE FROM EventParticipations WHERE EventId = {0}";
         await appDbContext.Database.ExecuteSqlRawAsync(deleteParticipantsSql, entity.Id);
@@ -68,6 +75,7 @@ public class EventRepository(AppDbContext appDbContext) : IEventRepository {
         const string sql = "SELECT e.* FROM Events e " +
                            "JOIN EventParticipations ep ON e.Id = ep.EventId " +
                            "WHERE ep.PersonId = {0}";
+        
         return await appDbContext.Events.FromSqlRaw(sql, userId).ToListAsync();
     }
     

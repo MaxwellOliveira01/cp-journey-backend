@@ -21,6 +21,7 @@ public class ModelConverter {
         return new UniversityModel {
             Id = university.Id,
             Name = university.Name,
+            Alias = university.Alias,
         };
     }
 
@@ -42,6 +43,15 @@ public class ModelConverter {
         };
     }
     
+    public LocalModel ToModel(Local local) {
+        return new LocalModel {
+            Id = local.Id,
+            City = local.City,
+            State = local.State,
+            Country = local.Country,
+        };
+    }
+    
     public PersonFullModel ToFullModel(Person person, University? university, List<Team> teams, List<Event> events) {
         return new PersonFullModel {
             Id = person.Id,
@@ -53,23 +63,18 @@ public class ModelConverter {
         };
     }
     
-    public UniversityFullModel ToFullModel(University university, List<Person> students, List<Team> teams /*,List<Contest> contests*/) {
+    public UniversityFullModel ToFullModel(University university, Local? local, List<Person> students, List<Team> teams /*,List<Contest> contests*/) {
         return new UniversityFullModel {
             Id = university.Id,
             Name = university.Name,
-            // Location = university.Location,
-            Students = students.ConvertAll(ToModel).ToList(),
-            Teams = teams.ConvertAll(ToModel).ToList(),
-            // Contests = contests.Select(c => new ContestModel {
-            //     Id = c.Id,
-            //     Name = c.Name,
-            //     Start = c.Start,
-            //     End = c.End
-            // }).ToList()
+            Alias = university.Alias,
+            Local = local != null ? ToModel(local) : null,
+            Students = students.ConvertAll(ToModel),
+            Teams = teams.ConvertAll(ToModel),
         };
     }
     
-    public EventFullModel ToFullModel(Event ev, List<Person> participants) {
+    public EventFullModel ToFullModel(Event ev, Local? local, List<Person> participants) {
         return new EventFullModel {
             Id = ev.Id,
             Name = ev.Name,
@@ -77,7 +82,8 @@ public class ModelConverter {
             End = ev.End,
             Description = ev.Description,
             WebsiteUrl = ev.WebsiteUrl,
-            Participants = participants.ConvertAll(ToModel).ToList(),
+            Local = local != null ? ToModel(local) : null,
+            Participants = participants.ConvertAll(ToModel),
         };
     }
     
@@ -85,14 +91,8 @@ public class ModelConverter {
         return new TeamFullModel {
             Id = team.Id,
             Name = team.Name,
-            Members = members.ConvertAll(ToModel).ToList(),
+            Members = members.ConvertAll(ToModel),
             University = university != null ? ToModel(university) : null,
-            // Contests = team.Contests.Select(c => new ContestModel {
-            //     Id = c.Id,
-            //     Name = c.Name,
-            //     Start = c.Start,
-            //     End = c.End
-            // }).ToList()
         };
     }
     

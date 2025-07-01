@@ -11,6 +11,7 @@ public class EventController(
     IEventRepository eventRepository,
     IEventService eventService,
     IPersonRepository personRepository,
+    ILocalRepository localRepository,
     ModelConverter modelConverter
 ) : ControllerBase {
 
@@ -18,7 +19,10 @@ public class EventController(
     public async Task<EventFullModel> Get(Guid id) {
         var ev = await eventRepository.GetRequiredAsync(id);
         var participants = await personRepository.ListByEventAsync(ev.Id);
-        return modelConverter.ToFullModel(ev, participants);
+        var local = ev.LocalId.HasValue
+            ? await localRepository.GetRequiredAsync(ev.LocalId.Value)
+            : null;
+        return modelConverter.ToFullModel(ev, local, participants);
     }
 
     [HttpPost]

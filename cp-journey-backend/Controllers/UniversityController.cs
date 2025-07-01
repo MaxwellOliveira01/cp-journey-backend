@@ -12,6 +12,7 @@ public class UniversityController(
     IUniversityService universityService,
     IPersonRepository personRepository,
     ITeamRepository teamRepository,
+    ILocalRepository localRepository,
     ModelConverter modelConverter
 ) : ControllerBase {
     
@@ -20,7 +21,10 @@ public class UniversityController(
         var university = await universityRepository.GetRequiredAsync(id);
         var students = await personRepository.ListByUniversityAsync(id);
         var teams = await teamRepository.ListByUniversityAsync(id);
-        return modelConverter.ToFullModel(university, students, teams);
+        var local = university.LocalId.HasValue
+            ? await localRepository.GetAsync(university.LocalId.Value)
+            : null;
+        return modelConverter.ToFullModel(university, local, students, teams);
     }
 
     [HttpPost]
