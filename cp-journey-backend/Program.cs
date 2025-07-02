@@ -34,10 +34,20 @@ var connectionString = $"Data Source={Path.Combine(databasePath, "app.db")}";
 builder.Services.AddDbContext<AppDbContext>(options 
     => options.UseSqlite(connectionString));
 
+// TODO: improve this policy before putting it in production
+builder.Services.AddCors(options => {
+    options.AddDefaultPolicy(policy => {
+        policy.AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 app.UseHttpsRedirection();
 
+app.UseCors(); // need to be before UseAuthorization
 app.UseAuthorization();
 
 app.MapControllers();

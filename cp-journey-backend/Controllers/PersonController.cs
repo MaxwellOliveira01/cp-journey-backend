@@ -55,5 +55,3 @@ public class PersonController(
     }
     
 }
-
-//TODO: criar entidade Country? ou apenas Local?
