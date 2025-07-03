@@ -6,18 +6,38 @@ public class ContestModel {
     
     public string Name { get; set; }
     
-    public int Year { get; set; }
+    public string? SiteUrl { get; set; }
+
+    public DateTime? StartDate { get; set; }
+    
+    public DateTime? EndDate { get; set; }
     
 }
 
 public class ContestFullModel : ContestModel {
+
+    public LocalModel? Local { get; set; }
     
-    public string OfficialPageUrl { get; set; }
+    // public List<TeamResultModel> Ranking { get; set; }
     
-    public string ProblemsPdfUrl { get; set; }
+}
+
+public class ContestCreateModel {
     
-    public string SolutionsPdfUrl { get; set; }
+    public string Name { get; set; }
     
-    public List<TeamResultModel> Ranking { get; set; }
+    public string? SiteUrl { get; set; }
+
+    public DateTime? StartDate { get; set; }
+    
+    public DateTime? EndDate { get; set; }
+    
+    public Guid? LocalId { get; set; }
+    
+}
+
+public class ContestUpdateModel : ContestCreateModel {
+    
+    public Guid Id { get; set; }
     
 }

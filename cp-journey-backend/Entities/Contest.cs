@@ -12,17 +12,15 @@ public class Contest {
     public string Name { get; set; }
     
     [MaxLength(250)]
-    public string SiteUrl { get; set; }
+    public string? SiteUrl { get; set; }
     
-    // public string Description { get; set; }
+    public DateTime? StartDate { get; set; }
     
-    public DateTime StartDate { get; set; }
-    
-    public DateTime EndDate { get; set; }
+    public DateTime? EndDate { get; set; }
     
     public List<Problem> Problems { get; set; }
     
-    public Guid LocalId { get; set; } 
-    public Local Local { get; set; }
+    public Guid? LocalId { get; set; } 
+    public Local? Local { get; set; }
      
 }

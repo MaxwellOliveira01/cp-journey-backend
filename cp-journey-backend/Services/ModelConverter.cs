@@ -64,14 +64,12 @@ public class ModelConverter {
     public ContestModel ToModel(Contest contest) {
         return new ContestModel {
             Id = contest.Id,
-            // Name = contest.Name,
-            // Start = contest.Start,
-            // End = contest.End,
-            // Description = contest.Description,
-            // WebsiteUrl = contest.WebsiteUrl,
+            Name = contest.Name,
+            StartDate = contest.StartDate,
+            EndDate = contest.EndDate,
+            SiteUrl = contest.SiteUrl,
         };
     }
-    
     
     public PersonFullModel ToFullModel(Person person, University? university, List<Team> teams, List<Event> events) {
         return new PersonFullModel {
@@ -128,5 +126,17 @@ public class ModelConverter {
             Contest = ToModel(contest),
         };
     }
+    
+    public ContestFullModel ToFullModel(Contest contest, Local local /*, List<TeamResult> ranking*/) {
+        return new ContestFullModel {
+            Id = contest.Id,
+            Name = contest.Name,
+            SiteUrl = contest.SiteUrl,
+            StartDate = contest.StartDate,
+            EndDate = contest.EndDate,
+            Local = ToModel(local)
+        };
+    }
+    
     
 }
