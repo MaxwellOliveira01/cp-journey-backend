@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace cp_journey_backend.Controllers;
 
 [ApiController]
-[Route("university")]
+[Route("api/universities")]
 public class UniversityController(
     IUniversityRepository universityRepository,
     IUniversityService universityService,

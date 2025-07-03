@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace cp_journey_backend.Controllers;
 
 [ApiController]
-[Route("local")]
+[Route("api/locals")]
 public class LocalController(
     ILocalRepository localRepository,
     ILocalService localService,

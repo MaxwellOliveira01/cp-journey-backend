@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace cp_journey_backend.Controllers;
 
 [ApiController]
-[Route("event")]
+[Route("api/events")]
 public class EventController(
     IEventRepository eventRepository,
     IEventService eventService,

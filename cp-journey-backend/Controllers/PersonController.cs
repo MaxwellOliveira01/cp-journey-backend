@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace cp_journey_backend.Controllers;
 
 [ApiController]
-[Route("person")]
+[Route("api/persons")]
 public class PersonController(
     IPersonService personService,
     IPersonRepository personRepository,
