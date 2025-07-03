@@ -3,20 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace cp_journey_backend.Repositories;
 
-public interface IEventRepository {
-    Task<Event?> GetAsync(Guid id);
-    
-    Task<Event> GetRequiredAsync(Guid id);
-    
-    Task AddAsync(Event entity);
-    
-    Task DeleteAsync(Event entity);
-    
-    Task<List<Event>> ListAsync();
-    
-    Task UpdateAsync(Event entity);
-
+public interface IEventRepository : IDefaultRepository<Event> {
     Task<List<Event>> ListByUserAsync(Guid userId);
+    
 }
 
 public class EventRepository(AppDbContext appDbContext) : IEventRepository {
@@ -45,9 +34,6 @@ public class EventRepository(AppDbContext appDbContext) : IEventRepository {
         const string sql = "SELECT * FROM Events WHERE Id = {0}";
         return await appDbContext.Events.FromSqlRaw(sql, id).FirstOrDefaultAsync();
     }
-
-    public async Task<Event> GetRequiredAsync(Guid id)
-        => await GetAsync(id) ?? throw new KeyNotFoundException($"Event with ID {id} not found.");
 
     public async Task UpdateAsync(Event entity) {
         const string sql = "UPDATE Events SET Name = {1}, Start = {2}, End = {3}," +

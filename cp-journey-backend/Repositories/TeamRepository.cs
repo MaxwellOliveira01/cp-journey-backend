@@ -4,25 +4,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace cp_journey_backend.Repositories;
 
-public interface ITeamRepository  {
-
-    Task<Team?> GetAsync(Guid id);
+public interface ITeamRepository : IDefaultRepository<Team> {
     
-    Task<Team> GetRequiredAsync(Guid id);
-    
-    Task AddAsync(Team person);
-
-    Task DeleteAsync(Team person);
-    
-    Task<List<Team>> ListAsync();
-
-    Task UpdateAsync(Team team);
-
     Task<List<Team>> ListByUserAsync(Guid userId);
 
     Task<List<Team>> ListByUniversityAsync(Guid universityId);
-
-
+    
 }
 
 public class TeamRepository(AppDbContext appDbContext) : ITeamRepository {

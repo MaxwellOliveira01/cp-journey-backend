@@ -3,20 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace cp_journey_backend.Repositories;
 
-public interface IPersonRepository {
-
-    Task<Person?> GetAsync(Guid id);
+public interface IPersonRepository : IDefaultRepository<Person> {
     
-    Task<Person> GetRequiredAsync(Guid id);
-    
-    Task AddAsync(Person person);
-
-    Task DeleteAsync(Person person);
-    
-    Task<List<Person>> ListAsync();
-
-    Task UpdateAsync(Person person);
-
     Task<List<Person>> ListByUniversityAsync(Guid universityId);
 
     Task<List<Person>> ListByEventAsync(Guid eventId);
@@ -30,14 +18,6 @@ public class PersonRepository(AppDbContext appDbContext) : IPersonRepository {
     public async Task<Person?> GetAsync(Guid id) {
         const string sql = "SELECT * FROM Persons WHERE Id = {0}";
         return await appDbContext.Persons.FromSqlRaw(sql, id).FirstOrDefaultAsync();
-    }
-
-    public async Task<Person> GetRequiredAsync(Guid id) {
-        var person = await GetAsync(id);
-        if (person == null) {
-            throw new KeyNotFoundException($"Person with ID {id} not found.");
-        }
-        return person;
     }
     
     public async Task AddAsync(Person entity) {

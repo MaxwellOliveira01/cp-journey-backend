@@ -3,19 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace cp_journey_backend.Repositories;
 
-public interface IUniversityRepository {
+public interface IUniversityRepository : IDefaultRepository<University> {
     
-    Task<University?> GetAsync(Guid id);
-    
-    Task<University> GetRequiredAsync(Guid id);
-    
-    Task AddAsync(University entity);
-    
-    Task DeleteAsync(University entity);
-    
-    Task<List<University>> ListAsync();
-    
-    Task UpdateAsync(University entity);
 }
 
 public class UniversityRepository(AppDbContext appDbContext) : IUniversityRepository {
