@@ -5,8 +5,8 @@ using cp_journey_backend.Repositories;
 namespace cp_journey_backend.Services;
 
 public interface IEventService {
-    Task<Event> AddAsync(EventCreateModel eventModel);
-    Task<Event> UpdateAsync(EventUpdateModel eventModel);
+    Task<Event> AddAsync(EventCreateModel data);
+    Task<Event> UpdateAsync(EventUpdateModel data);
 }
 
 public class EventService(
@@ -16,19 +16,19 @@ public class EventService(
 
     public async Task<Event> AddAsync(EventCreateModel data) {
         var ev = new Event { Id = Guid.NewGuid() };
-        await updateFields(ev, data);
+        await updateFieldsAsync(ev, data);
         await eventRepository.AddAsync(ev);
         return ev;
     }
 
     public async Task<Event> UpdateAsync(EventUpdateModel data) {
         var ev = await eventRepository.GetRequiredAsync(data.Id);
-        await updateFields(ev, data);
+        await updateFieldsAsync(ev, data);
         await eventRepository.UpdateAsync(ev);
         return ev;
     }
 
-    private async Task updateFields(Event ev, EventCreateModel data) {
+    private async Task updateFieldsAsync(Event ev, EventCreateModel data) {
         
         var local = data.LocalId.HasValue
             ? await localRepository.GetRequiredAsync(data.LocalId.Value)

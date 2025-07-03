@@ -11,9 +11,7 @@ public interface IPersonService {
 }
 
 public class PersonService(
-    IPersonRepository personRepository,
-    IUniversityRepository universityRepository,
-    ModelConverter modelConverter
+    IPersonRepository personRepository
 ) : IPersonService {
 
     public async Task<Person> AddAsync(CreatePersonModel data) {

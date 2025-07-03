@@ -21,7 +21,7 @@ public class UniversityRepository(AppDbContext appDbContext) : IUniversityReposi
 
     public async Task<University?> GetAsync(Guid id) {
         var sql = "SELECT * FROM Universities WHERE Id = {0}";
-        return await appDbContext.Universities.FromSqlRaw(sql, id).AsNoTracking().FirstOrDefaultAsync();
+        return await appDbContext.Universities.FromSqlRaw(sql, id).FirstOrDefaultAsync();
     }
 
     public async Task<University> GetRequiredAsync(Guid id) {
