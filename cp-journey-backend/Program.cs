@@ -55,7 +55,7 @@ app.MapControllers();
 // Apply the remaining migrations before starting the application
 using (var scope = app.Services.CreateScope()) {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate();
+    await db.Database.MigrateAsync();
 }
 
-app.Run();
+await app.RunAsync();
