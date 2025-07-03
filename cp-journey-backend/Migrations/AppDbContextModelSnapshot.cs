@@ -22,10 +22,10 @@ namespace cp_journey_backend.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("EndDate")
+                    b.Property<DateTime?>("EndDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("LocalId")
+                    b.Property<Guid?>("LocalId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
@@ -34,11 +34,10 @@ namespace cp_journey_backend.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("SiteUrl")
-                        .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("StartDate")
+                    b.Property<DateTime?>("StartDate")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -244,9 +243,7 @@ namespace cp_journey_backend.Migrations
                 {
                     b.HasOne("cp_journey_backend.Entities.Local", "Local")
                         .WithMany("Contests")
-                        .HasForeignKey("LocalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("LocalId");
 
                     b.Navigation("Local");
                 });

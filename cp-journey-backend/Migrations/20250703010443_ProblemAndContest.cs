@@ -17,10 +17,10 @@ namespace cp_journey_backend.Migrations
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
-                    SiteUrl = table.Column<string>(type: "TEXT", maxLength: 250, nullable: false),
-                    StartDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    EndDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    LocalId = table.Column<Guid>(type: "TEXT", nullable: false)
+                    SiteUrl = table.Column<string>(type: "TEXT", maxLength: 250, nullable: true),
+                    StartDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    EndDate = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    LocalId = table.Column<Guid>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -29,8 +29,7 @@ namespace cp_journey_backend.Migrations
                         name: "FK_Contests_Locals_LocalId",
                         column: x => x.LocalId,
                         principalTable: "Locals",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
