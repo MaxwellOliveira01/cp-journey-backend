@@ -63,3 +63,9 @@ using (var scope = app.Services.CreateScope()) {
 }
 
 await app.RunAsync();
+
+public partial class Program {
+
+    // Used on integration tests
+
+}
