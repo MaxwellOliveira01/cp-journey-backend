@@ -4,7 +4,7 @@ using System.Net.Http.Json;
 
 namespace IntegrationTests {
     
-    public class LocalControllerTests(WebApplicationFactory<Program> factory) : IClassFixture<WebApplicationFactory<Program>> {
+    public class LocalControllerTests(CustomWebApplicationFactory factory) : IClassFixture<CustomWebApplicationFactory> {
 
         private readonly HttpClient httpClient = factory.CreateClient();
         
