@@ -20,6 +20,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
 
     public DbSet<Local> Locals { get; set; }
     
+    public DbSet<Contest> Contests { get; set; }
+    
+    public DbSet<Problem> Problems { get; set; }
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder) {
         
         modelBuilder.Entity<TeamMember>()

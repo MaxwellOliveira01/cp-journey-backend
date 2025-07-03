@@ -51,6 +51,27 @@ public class ModelConverter {
             Country = local.Country,
         };
     }
+
+    public ProblemModel ToModel(Problem problem) {
+        return new ProblemModel {
+            Id = problem.Id,
+            Name = problem.Name,
+            Label = problem.Label,
+            Order = problem.Order,
+        };
+    }
+    
+    public ContestModel ToModel(Contest contest) {
+        return new ContestModel {
+            Id = contest.Id,
+            // Name = contest.Name,
+            // Start = contest.Start,
+            // End = contest.End,
+            // Description = contest.Description,
+            // WebsiteUrl = contest.WebsiteUrl,
+        };
+    }
+    
     
     public PersonFullModel ToFullModel(Person person, University? university, List<Team> teams, List<Event> events) {
         return new PersonFullModel {
@@ -93,6 +114,18 @@ public class ModelConverter {
             Name = team.Name,
             Members = members.ConvertAll(ToModel),
             University = university != null ? ToModel(university) : null,
+        };
+    }
+    
+    public ProblemFullModel ToFullModel(Problem problem, Person? setter, Contest contest) {
+        return new ProblemFullModel {
+            Id = problem.Id,
+            Name = problem.Name,
+            Label = problem.Label,
+            Order = problem.Order,
+            // StatementPdf = problem.StatementPdf,
+            Setter = setter != null ? ToModel(setter) : null,
+            Contest = ToModel(contest),
         };
     }
     

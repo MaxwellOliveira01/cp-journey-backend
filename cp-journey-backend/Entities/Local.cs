@@ -18,4 +18,6 @@ public class Local {
     
     public List<University> Universities { get; set; }
     
+    public List<Contest> Contests { get; set; }
+    
 }
