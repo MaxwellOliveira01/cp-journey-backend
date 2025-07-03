@@ -22,7 +22,7 @@ public class UniversityFullModel : UniversityModel {
     
 }
 
-public class CreateUniversityModel {
+public class UniversityCreateModel {
     
     public string Name { get; set; }
     
@@ -32,7 +32,7 @@ public class CreateUniversityModel {
     
 }
 
-public class UpdateUniversityModel : CreateUniversityModel {
+public class UniversityUpdateModel : UniversityCreateModel {
     
     public Guid Id { get; set; }
     

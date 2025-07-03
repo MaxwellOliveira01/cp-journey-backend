@@ -28,13 +28,13 @@ public class UniversityController(
     }
 
     [HttpPost]
-    public async Task<UniversityModel> Create(CreateUniversityModel data) {
+    public async Task<UniversityModel> Create(UniversityCreateModel data) {
         var university = await universityService.AddAsync(data);
         return modelConverter.ToModel(university);
     }
     
     [HttpPut]
-    public async Task<UniversityModel> UpdateAsync(UpdateUniversityModel data) {
+    public async Task<UniversityModel> UpdateAsync(UniversityUpdateModel data) {
         var university = await universityService.UpdateAsync(data);
         return modelConverter.ToModel(university);
     }

@@ -5,8 +5,8 @@ using cp_journey_backend.Repositories;
 namespace cp_journey_backend.Services;
 
 public interface IUniversityService {
-    Task<University> AddAsync(CreateUniversityModel university);
-    Task<University> UpdateAsync(UpdateUniversityModel university);
+    Task<University> AddAsync(UniversityCreateModel university);
+    Task<University> UpdateAsync(UniversityUpdateModel university);
 }
 
 public class UniversityService(
@@ -14,21 +14,21 @@ public class UniversityService(
     ILocalRepository localRepository
 ) : IUniversityService {
 
-    public async Task<University> AddAsync(CreateUniversityModel data) {
+    public async Task<University> AddAsync(UniversityCreateModel data) {
         var university = new University { Id = Guid.NewGuid() };
         await updateFields(university, data);
         await universityRepository.AddAsync(university);
         return university;
     }
     
-    public async Task<University> UpdateAsync(UpdateUniversityModel data) {
+    public async Task<University> UpdateAsync(UniversityUpdateModel data) {
         var university = await universityRepository.GetRequiredAsync(data.Id);
         await updateFields(university, data);
         await universityRepository.UpdateAsync(university);
         return university;
     }
 
-    private async Task updateFields(University university, CreateUniversityModel data) {
+    private async Task updateFields(University university, UniversityCreateModel data) {
 
         var local = data.LocalId.HasValue
             ? await localRepository.GetAsync(data.LocalId.Value)
