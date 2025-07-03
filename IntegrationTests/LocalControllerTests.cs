@@ -1,5 +1,4 @@
 ﻿using cp_journey_backend.Api;
-using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net.Http.Json;
 
 namespace IntegrationTests {
@@ -10,25 +9,16 @@ namespace IntegrationTests {
         
         [Fact]
         public async Task Get_ReturnsLocal() {
-            
+
             // Arrange
-            
-            var createModel = new LocalCreateModel() {
-                City = "Brasilia",
-                State = "Federal District",
-                Country = "Brazil",
-            };
-
-            var createResponse = await httpClient.PostAsJsonAsync("/api/locals", createModel);
-            createResponse.EnsureSuccessStatusCode();
-
-            var local = await createResponse.Content.ReadFromJsonAsync<LocalModel>();
+            var local = await Util.CreateLocalAsync(httpClient);
 
             // Act
             
             var response = await httpClient.GetAsync($"/api/locals/{local.Id}");
             response.EnsureSuccessStatusCode();
 
+            // TODO: test the other fields of fullModel, like universities and students
             var fetchedLocal = await response.Content.ReadFromJsonAsync<LocalFullModel>();
 
             // Assert
@@ -66,16 +56,9 @@ namespace IntegrationTests {
         public async Task Put_UpdatesLocal() {
 
             // Arrange
-            var createModel = new LocalCreateModel() {
-                City = "Sao Paulo",
-                State = "Sao Paulo",
-                Country = "Brazil",
-            };
-
-            var createResponse = await httpClient.PostAsJsonAsync("/api/locals", createModel);
-            createResponse.EnsureSuccessStatusCode();
             
-            var local = await createResponse.Content.ReadFromJsonAsync<LocalModel>();
+            var local = await Util.CreateLocalAsync(httpClient);
+            
             var updateModel = new LocalUpdateModel() {
                 Id = local.Id,
                 City = "Sao Paulo Updated",
@@ -102,15 +85,7 @@ namespace IntegrationTests {
 
             // Arrange
 
-            var createModel = new LocalCreateModel() {
-                City = "Curitiba",
-                State = "Parana",
-                Country = "Brazil",
-            };
-
-            var createResponse = await httpClient.PostAsJsonAsync("/api/locals", createModel);
-            createResponse.EnsureSuccessStatusCode();
-            var local = await createResponse.Content.ReadFromJsonAsync<LocalModel>();
+            var local = await Util.CreateLocalAsync(httpClient);
 
             // Act
 
