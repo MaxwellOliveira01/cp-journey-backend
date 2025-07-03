@@ -25,4 +25,6 @@ public class Problem {
     public Guid? SetterId { get; set; }
     public Person? Setter { get; set; }
     
+    public List<Submission> Submissions { get; set; }
+    
 }

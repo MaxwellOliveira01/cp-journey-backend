@@ -22,5 +22,7 @@ public class Contest {
     
     public Guid? LocalId { get; set; } 
     public Local? Local { get; set; }
-     
+    
+    public List<TeamResult> TeamResults { get; set; }
+    
 }

@@ -17,4 +17,6 @@ public class Team {
     
     public List<TeamMember> Members { get; set; }
     
+    public List<TeamResult> Results { get; set; }
+    
 }

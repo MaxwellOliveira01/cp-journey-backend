@@ -18,6 +18,8 @@ public class ContestFullModel : ContestModel {
 
     public LocalModel? Local { get; set; }
     
+    public List<ProblemModel> Problems { get; set; }
+    
     // public List<TeamResultModel> Ranking { get; set; }
     
 }
