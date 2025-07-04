@@ -6,12 +6,12 @@ namespace cp_journey_backend.Entities;
 public class Team {
     
     [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 
     [MaxLength(100)]
     public string Name { get; set; }
     
-    public Guid? UniversityId { get; set; }
+    public int? UniversityId { get; set; }
     
     public University University { get; set; }
     

@@ -5,8 +5,8 @@ namespace cp_journey_backend.Entities;
 
 public class Person {
 
-    [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
-    public Guid Id { get; set; }
+    [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
     
     [MaxLength(200)]
     public string Name { get; set; }
@@ -14,7 +14,7 @@ public class Person {
     [MaxLength(200)]
     public string Handle { get; set; }
     
-    public Guid? UniversityId { get; set; }
+    public int? UniversityId { get; set; }
     
     public University University { get; set; }
     

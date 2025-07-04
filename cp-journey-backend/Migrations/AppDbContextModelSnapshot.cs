@@ -24,14 +24,17 @@ namespace cp_journey_backend.Migrations
 
             modelBuilder.Entity("cp_journey_backend.Entities.Contest", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid?>("LocalId")
-                        .HasColumnType("uuid");
+                    b.Property<int?>("LocalId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -54,8 +57,11 @@ namespace cp_journey_backend.Migrations
 
             modelBuilder.Entity("cp_journey_backend.Entities.Event", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
@@ -64,8 +70,8 @@ namespace cp_journey_backend.Migrations
                     b.Property<DateTime?>("End")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<Guid?>("LocalId")
-                        .HasColumnType("uuid");
+                    b.Property<int?>("LocalId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -88,11 +94,11 @@ namespace cp_journey_backend.Migrations
 
             modelBuilder.Entity("cp_journey_backend.Entities.EventParticipation", b =>
                 {
-                    b.Property<Guid>("EventId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("EventId")
+                        .HasColumnType("integer");
 
-                    b.Property<Guid>("PersonId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("PersonId")
+                        .HasColumnType("integer");
 
                     b.HasKey("EventId", "PersonId");
 
@@ -103,8 +109,11 @@ namespace cp_journey_backend.Migrations
 
             modelBuilder.Entity("cp_journey_backend.Entities.Local", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("City")
                         .IsRequired()
@@ -125,8 +134,11 @@ namespace cp_journey_backend.Migrations
 
             modelBuilder.Entity("cp_journey_backend.Entities.Person", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Handle")
                         .IsRequired()
@@ -138,8 +150,8 @@ namespace cp_journey_backend.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
-                    b.Property<Guid?>("UniversityId")
-                        .HasColumnType("uuid");
+                    b.Property<int?>("UniversityId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -150,11 +162,14 @@ namespace cp_journey_backend.Migrations
 
             modelBuilder.Entity("cp_journey_backend.Entities.Problem", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
 
-                    b.Property<Guid>("ContestId")
-                        .HasColumnType("uuid");
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ContestId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Label")
                         .IsRequired()
@@ -169,8 +184,8 @@ namespace cp_journey_backend.Migrations
                     b.Property<int>("Order")
                         .HasColumnType("integer");
 
-                    b.Property<Guid?>("SetterId")
-                        .HasColumnType("uuid");
+                    b.Property<int?>("SetterId")
+                        .HasColumnType("integer");
 
                     b.Property<byte[]>("StatementPdf")
                         .HasColumnType("bytea");
@@ -186,8 +201,11 @@ namespace cp_journey_backend.Migrations
 
             modelBuilder.Entity("cp_journey_backend.Entities.Submission", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Accepted")
                         .HasColumnType("boolean");
@@ -195,11 +213,11 @@ namespace cp_journey_backend.Migrations
                     b.Property<int>("Penalty")
                         .HasColumnType("integer");
 
-                    b.Property<Guid>("ProblemId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("ProblemId")
+                        .HasColumnType("integer");
 
-                    b.Property<Guid>("TeamResultId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("TeamResultId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("Tries")
                         .HasColumnType("integer");
@@ -215,16 +233,16 @@ namespace cp_journey_backend.Migrations
 
             modelBuilder.Entity("cp_journey_backend.Entities.Team", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                    b.Property<int>("Id")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<Guid?>("UniversityId")
-                        .HasColumnType("uuid");
+                    b.Property<int?>("UniversityId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -235,11 +253,11 @@ namespace cp_journey_backend.Migrations
 
             modelBuilder.Entity("cp_journey_backend.Entities.TeamMember", b =>
                 {
-                    b.Property<Guid>("PersonId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("PersonId")
+                        .HasColumnType("integer");
 
-                    b.Property<Guid>("TeamId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("TeamId")
+                        .HasColumnType("integer");
 
                     b.HasKey("PersonId", "TeamId");
 
@@ -250,11 +268,14 @@ namespace cp_journey_backend.Migrations
 
             modelBuilder.Entity("cp_journey_backend.Entities.TeamResult", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
 
-                    b.Property<Guid>("ContestId")
-                        .HasColumnType("uuid");
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ContestId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("Penalty")
                         .HasColumnType("integer");
@@ -262,8 +283,8 @@ namespace cp_journey_backend.Migrations
                     b.Property<int>("Position")
                         .HasColumnType("integer");
 
-                    b.Property<Guid>("TeamId")
-                        .HasColumnType("uuid");
+                    b.Property<int>("TeamId")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -276,16 +297,19 @@ namespace cp_journey_backend.Migrations
 
             modelBuilder.Entity("cp_journey_backend.Entities.University", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Alias")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)");
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
 
-                    b.Property<Guid?>("LocalId")
-                        .HasColumnType("uuid");
+                    b.Property<int?>("LocalId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()

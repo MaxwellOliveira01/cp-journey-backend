@@ -6,8 +6,8 @@ namespace cp_journey_backend.Entities;
 
 public class Problem {
     
-    [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
-    public Guid Id { get; set; }
+    [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
 
     [MaxLength(200)]
     public string Name { get; set; }
@@ -19,10 +19,10 @@ public class Problem {
 
     public byte[]? StatementPdf { get; set; }
     
-    public Guid ContestId { get; set; }
+    public int ContestId { get; set; }
     public Contest Contest { get; set; }
      
-    public Guid? SetterId { get; set; }
+    public int? SetterId { get; set; }
     public Person? Setter { get; set; }
     
     public List<Submission> Submissions { get; set; }

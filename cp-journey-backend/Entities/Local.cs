@@ -5,8 +5,8 @@ namespace cp_journey_backend.Entities;
 
 public class Local {
     
-    [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
-    public Guid Id { get; set; }
+    [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
     
     public string City { get; set; }
     

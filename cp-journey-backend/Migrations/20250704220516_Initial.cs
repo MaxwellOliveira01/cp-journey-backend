@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -15,7 +16,8 @@ namespace cp_journey_backend.Migrations
                 name: "Locals",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     City = table.Column<string>(type: "text", nullable: false),
                     State = table.Column<string>(type: "text", nullable: false),
                     Country = table.Column<string>(type: "text", nullable: false)
@@ -29,12 +31,13 @@ namespace cp_journey_backend.Migrations
                 name: "Contests",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     SiteUrl = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: true),
                     StartDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     EndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    LocalId = table.Column<Guid>(type: "uuid", nullable: true)
+                    LocalId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -50,13 +53,14 @@ namespace cp_journey_backend.Migrations
                 name: "Events",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
                     WebsiteUrl = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: true),
                     Start = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     End = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    LocalId = table.Column<Guid>(type: "uuid", nullable: true)
+                    LocalId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -72,10 +76,11 @@ namespace cp_journey_backend.Migrations
                 name: "Universities",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    Alias = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
-                    LocalId = table.Column<Guid>(type: "uuid", nullable: true)
+                    Alias = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    LocalId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -91,10 +96,11 @@ namespace cp_journey_backend.Migrations
                 name: "Persons",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     Handle = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
-                    UniversityId = table.Column<Guid>(type: "uuid", nullable: true)
+                    UniversityId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -110,9 +116,9 @@ namespace cp_journey_backend.Migrations
                 name: "Teams",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false),
                     Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    UniversityId = table.Column<Guid>(type: "uuid", nullable: true)
+                    UniversityId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -128,8 +134,8 @@ namespace cp_journey_backend.Migrations
                 name: "EventParticipations",
                 columns: table => new
                 {
-                    EventId = table.Column<Guid>(type: "uuid", nullable: false),
-                    PersonId = table.Column<Guid>(type: "uuid", nullable: false)
+                    EventId = table.Column<int>(type: "integer", nullable: false),
+                    PersonId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -152,13 +158,14 @@ namespace cp_journey_backend.Migrations
                 name: "Problems",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     Label = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false),
                     Order = table.Column<int>(type: "integer", nullable: false),
                     StatementPdf = table.Column<byte[]>(type: "bytea", nullable: true),
-                    ContestId = table.Column<Guid>(type: "uuid", nullable: false),
-                    SetterId = table.Column<Guid>(type: "uuid", nullable: true)
+                    ContestId = table.Column<int>(type: "integer", nullable: false),
+                    SetterId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -180,8 +187,8 @@ namespace cp_journey_backend.Migrations
                 name: "TeamMembers",
                 columns: table => new
                 {
-                    TeamId = table.Column<Guid>(type: "uuid", nullable: false),
-                    PersonId = table.Column<Guid>(type: "uuid", nullable: false)
+                    TeamId = table.Column<int>(type: "integer", nullable: false),
+                    PersonId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -204,9 +211,10 @@ namespace cp_journey_backend.Migrations
                 name: "TeamResult",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    TeamId = table.Column<Guid>(type: "uuid", nullable: false),
-                    ContestId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    TeamId = table.Column<int>(type: "integer", nullable: false),
+                    ContestId = table.Column<int>(type: "integer", nullable: false),
                     Position = table.Column<int>(type: "integer", nullable: false),
                     Penalty = table.Column<int>(type: "integer", nullable: false)
                 },
@@ -231,9 +239,10 @@ namespace cp_journey_backend.Migrations
                 name: "Submission",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    TeamResultId = table.Column<Guid>(type: "uuid", nullable: false),
-                    ProblemId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    TeamResultId = table.Column<int>(type: "integer", nullable: false),
+                    ProblemId = table.Column<int>(type: "integer", nullable: false),
                     Tries = table.Column<int>(type: "integer", nullable: false),
                     Accepted = table.Column<bool>(type: "boolean", nullable: false),
                     Penalty = table.Column<int>(type: "integer", nullable: false)

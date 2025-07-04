@@ -5,13 +5,13 @@ namespace cp_journey_backend.Entities;
 
 public class Submission {
 
-    [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
-    public Guid Id { get; set; }
+    [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
     
-    public Guid TeamResultId { get; set; }
+    public int TeamResultId { get; set; }
     public TeamResult TeamResult { get; set; }
     
-    public Guid ProblemId { get; set; }
+    public int ProblemId { get; set; }
     public Problem Problem { get; set; }
     
     public int Tries { get; set; }

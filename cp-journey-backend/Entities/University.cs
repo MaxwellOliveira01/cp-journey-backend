@@ -5,16 +5,16 @@ namespace cp_journey_backend.Entities;
 
 public class University {
     
-    [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
-    public Guid Id { get; set; }
+    [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int Id { get; set; }
     
     [MaxLength(200)]
     public string Name { get; set; }
     
-    [MaxLength(20)]
+    [MaxLength(30)]
     public string Alias { get; set; }
     
-    public Guid? LocalId { get; set; }
+    public int? LocalId { get; set; }
     
     public Local? Local { get; set; }
     
