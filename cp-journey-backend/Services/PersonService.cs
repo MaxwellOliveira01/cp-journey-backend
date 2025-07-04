@@ -6,15 +6,15 @@ using cp_journey_backend.Repositories;
 namespace cp_journey_backend.Services;
 
 public interface IPersonService {
-    Task<Person> AddAsync(CreatePersonModel data);
-    Task<Person> UpdateAsync(UpdatePersonModel data);
+    Task<Person> AddAsync(PersonCreateModel data);
+    Task<Person> UpdateAsync(PersonUpdateModel data);
 }
 
 public class PersonService(
     IPersonRepository personRepository
 ) : IPersonService {
 
-    public async Task<Person> AddAsync(CreatePersonModel data) {
+    public async Task<Person> AddAsync(PersonCreateModel data) {
         
         var person = new Person {
             Id = Guid.NewGuid(),
@@ -27,7 +27,7 @@ public class PersonService(
         return person;
     }
     
-    public async Task<Person> UpdateAsync(UpdatePersonModel data) {
+    public async Task<Person> UpdateAsync(PersonUpdateModel data) {
         var person = await personRepository.GetRequiredAsync(data.Id);
         
         person.Name = data.Name;

@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace cp_journey_backend.Repositories;
 
 public interface IPersonRepository : IDefaultRepository<Person> {
-    
+
     Task<List<Person>> ListByUniversityAsync(Guid universityId);
 
     Task<List<Person>> ListByEventAsync(Guid eventId);
@@ -14,53 +14,53 @@ public interface IPersonRepository : IDefaultRepository<Person> {
 }
 
 public class PersonRepository(AppDbContext appDbContext) : IPersonRepository {
-    
+
     public async Task<Person?> GetAsync(Guid id) {
-        const string sql = "SELECT * FROM Persons WHERE Id = {0}";
+        const string sql = "SELECT * FROM \"Persons\" WHERE \"Id\" = {0}";
         return await appDbContext.Persons.FromSqlRaw(sql, id).FirstOrDefaultAsync();
     }
     
     public async Task AddAsync(Person entity) {
-        const string sql = "INSERT INTO Persons (Id, Name, Handle, UniversityId) VALUES ({0}, {1}, {2}, {3})";
+        const string sql = "INSERT INTO \"Persons\" (\"Id\", \"Name\", \"Handle\", \"UniversityId\") VALUES ({0}, {1}, {2}, {3})";
         await appDbContext.Database.ExecuteSqlRawAsync(sql, entity.Id, entity.Name, entity.Handle, entity.UniversityId);
     }
 
     public async Task DeleteAsync(Person entity) {
-        const string sql = "DELETE FROM Persons WHERE Id = {0}";
+        const string sql = "DELETE FROM \"Persons\" WHERE \"Id\" = {0}";
         await appDbContext.Database.ExecuteSqlRawAsync(sql, entity.Id);
     }
 
     public async Task<List<Person>> ListAsync() {
-        const string sql = "SELECT * FROM Persons";
+        const string sql = "SELECT * FROM \"Persons\"";
         return await appDbContext.Persons.FromSqlRaw(sql).ToListAsync();
     }
-    
+
     public async Task UpdateAsync(Person entity) {
-        const string sql = "UPDATE Persons SET Name = {1}, Handle = {2}, UniversityId = {3} WHERE Id = {0}";
+        const string sql = "UPDATE \"Persons\" SET \"Name\" = {1}, \"Handle\" = {2}, \"UniversityId\" = {3} WHERE \"Id\" = {0}";
         await appDbContext.Database.ExecuteSqlRawAsync(sql, entity.Id, entity.Name, entity.Handle, entity.UniversityId);
     }
-    
+
     public async Task<List<Person>> ListByUniversityAsync(Guid universityId) {
-        const string sql = "SELECT * FROM Persons WHERE UniversityId = {0}";
+        const string sql = "SELECT * FROM \"Persons\" WHERE \"UniversityId\" = {0}";
         return await appDbContext.Persons.FromSqlRaw(sql, universityId).ToListAsync();
     }
-    
+
     public async Task<List<Person>> ListByEventAsync(Guid eventId) {
         const string sql = @"
-            SELECT p.* 
-            FROM Persons p
-            JOIN EventParticipations ep ON p.Id = ep.PersonId
-            WHERE ep.EventId = {0}";
+            SELECT p.*
+            FROM ""Persons"" p
+            JOIN ""EventParticipations"" ep ON p.""Id"" = ep.""PersonId""
+            WHERE ep.""EventId"" = {0}";
         return await appDbContext.Persons.FromSqlRaw(sql, eventId).ToListAsync();
     }
-    
+
     public async Task<List<Person>> ListByTeamAsync(Guid teamId) {
         const string sql = @"
-            SELECT p.* 
-            FROM Persons p
-            JOIN TeamMembers tm ON p.Id = tm.PersonId
-            WHERE tm.TeamId = {0}";
+            SELECT p.*
+            FROM ""Persons"" p
+            JOIN ""TeamMembers"" tm ON p.""Id"" = tm.""PersonId""
+            WHERE tm.""TeamId"" = {0}";
         return await appDbContext.Persons.FromSqlRaw(sql, teamId).ToListAsync();
     }
-    
+
 }

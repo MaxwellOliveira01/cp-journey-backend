@@ -28,7 +28,7 @@ public class PersonFullModel : PersonModel {
     
 }
 
-public class CreatePersonModel {
+public class PersonCreateModel {
     
     public string Name { get; set; }
     
@@ -38,7 +38,7 @@ public class CreatePersonModel {
     
 }
 
-public class UpdatePersonModel : CreatePersonModel {
+public class PersonUpdateModel : PersonCreateModel {
     
     public Guid Id { get; set; }
     

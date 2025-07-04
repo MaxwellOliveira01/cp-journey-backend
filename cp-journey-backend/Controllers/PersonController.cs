@@ -36,13 +36,13 @@ public class PersonController(
     }
     
     [HttpPost]
-    public async Task<PersonModel> CreateAsync(CreatePersonModel data) {
+    public async Task<PersonModel> CreateAsync(PersonCreateModel data) {
         var profile = await personService.AddAsync(data);
         return modelConverter.ToModel(profile);
     }
 
     [HttpPut]
-    public async Task<PersonModel> UpdateAsync(UpdatePersonModel data) {
+    public async Task<PersonModel> UpdateAsync(PersonUpdateModel data) {
         var profile = await personService.UpdateAsync(data);
         return modelConverter.ToModel(profile);
     }
