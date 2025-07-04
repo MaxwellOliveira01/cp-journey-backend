@@ -16,7 +16,7 @@ public class ProblemService(
 ) : IProblemService {
     
     public async Task<Problem> AddAsync(ProblemCreateModel data) {
-        var problem = new Problem { Id = Guid.NewGuid() };
+        var problem = new Problem();
         await UpdateFieldsAsync(problem, data);
         await problemRepository.AddAsync(problem);
         return problem;

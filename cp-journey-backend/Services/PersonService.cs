@@ -17,7 +17,6 @@ public class PersonService(
     public async Task<Person> AddAsync(PersonCreateModel data) {
         
         var person = new Person {
-            Id = Guid.NewGuid(),
             Name = data.Name,
             Handle = data.Handle,
             UniversityId = data.UniversityId

@@ -16,7 +16,7 @@ public class EventController(
 ) : ControllerBase {
 
     [HttpGet("{id}")]
-    public async Task<EventFullModel> Get(Guid id) {
+    public async Task<EventFullModel> Get(int id) {
         var ev = await eventRepository.GetRequiredAsync(id);
         var participants = await personRepository.ListByEventAsync(ev.Id);
         var local = ev.LocalId.HasValue
@@ -38,7 +38,7 @@ public class EventController(
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteAsync(Guid id) {
+    public async Task<IActionResult> DeleteAsync(int id) {
         var ev = await eventRepository.GetRequiredAsync(id);
         await eventRepository.DeleteAsync(ev);
         return NoContent();

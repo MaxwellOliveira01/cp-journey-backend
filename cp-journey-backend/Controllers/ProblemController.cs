@@ -16,7 +16,7 @@ public class ProblemController(
 ): ControllerBase {
     
     [HttpGet("{id}")]
-    public async Task<ProblemFullModel> Get(Guid id) {
+    public async Task<ProblemFullModel> Get(int id) {
         var problem = await problemRepository.GetRequiredAsync(id);
         var setter = problem.SetterId.HasValue 
             ? await personRepository.GetRequiredAsync(problem.SetterId.Value) 
@@ -38,7 +38,7 @@ public class ProblemController(
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteAsync(Guid id) {
+    public async Task<IActionResult> DeleteAsync(int id) {
         var problem = await problemRepository.GetRequiredAsync(id);
         await problemRepository.DeleteAsync(problem);
         return NoContent();

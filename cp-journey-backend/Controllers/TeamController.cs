@@ -16,7 +16,7 @@ public class TeamController(
 ) : ControllerBase {
     
     [HttpGet("{id}")]
-    public async Task<TeamFullModel> GetAsync(Guid id) {
+    public async Task<TeamFullModel> GetAsync(int id) {
         var team = await teamRepository.GetRequiredAsync(id);
         var members = await personRepository.ListByTeamAsync(id);
         var university = team.UniversityId.HasValue ? await universityRepository.GetAsync(team.UniversityId.Value) : null;
@@ -36,7 +36,7 @@ public class TeamController(
     }
     
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteAsync(Guid id) {
+    public async Task<IActionResult> DeleteAsync(int id) {
         var team = await teamRepository.GetRequiredAsync(id);
         await teamRepository.DeleteAsync(team);
         return NoContent(); // 204 (Ok)

@@ -17,7 +17,7 @@ public class UniversityController(
 ) : ControllerBase {
     
     [HttpGet("{id}")]
-    public async Task<UniversityFullModel> Get(Guid id) {
+    public async Task<UniversityFullModel> Get(int id) {
         var university = await universityRepository.GetRequiredAsync(id);
         var students = await personRepository.ListByUniversityAsync(id);
         var teams = await teamRepository.ListByUniversityAsync(id);
@@ -40,7 +40,7 @@ public class UniversityController(
     }
     
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteAsync(Guid id) {
+    public async Task<IActionResult> DeleteAsync(int id) {
         var university = await universityRepository.GetRequiredAsync(id);
         await universityRepository.DeleteAsync(university);
         return NoContent(); // 204 (Ok)

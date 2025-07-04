@@ -14,7 +14,7 @@ public class ContestController(
 ) : ControllerBase{
     
     [HttpGet("{id}")]
-    public async Task<ContestModel> Get(Guid id) {
+    public async Task<ContestModel> Get(int id) {
         var contest = await contestRepository.GetRequiredAsync(id);
         return modelConverter.ToModel(contest);
     }
@@ -32,7 +32,7 @@ public class ContestController(
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteAsync(Guid id) {
+    public async Task<IActionResult> DeleteAsync(int id) {
         var contest = await contestRepository.GetRequiredAsync(id);
         await contestRepository.DeleteAsync(contest);
         return NoContent();

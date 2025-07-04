@@ -14,7 +14,7 @@ public class LocalController(
 ) : ControllerBase {
     
     [HttpGet("{id}")]
-    public async Task<LocalModel> Get(Guid id) {
+    public async Task<LocalModel> Get(int id) {
         var local = await localRepository.GetRequiredAsync(id);
         return modelConverter.ToModel(local);
     }
@@ -32,7 +32,7 @@ public class LocalController(
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteAsync(Guid id) {
+    public async Task<IActionResult> DeleteAsync(int id) {
         var local = await localRepository.GetRequiredAsync(id);
         await localRepository.DeleteAsync(local);
         return NoContent();

@@ -15,7 +15,7 @@ public class ContestService(
 ) : IContestService {
     
     public async Task<Contest> AddAsync(ContestCreateModel data) {
-        var contest = new Contest { Id = Guid.NewGuid() };
+        var contest = new Contest();
         await UpdateFieldsAsync(contest, data);
         await contestRepository.AddAsync(contest);
         return contest;

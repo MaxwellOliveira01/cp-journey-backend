@@ -17,7 +17,7 @@ public class PersonController(
 : ControllerBase {
 
     [HttpGet("{id}")]
-    public async Task<PersonFullModel> GetAsync(Guid id) {
+    public async Task<PersonFullModel> GetAsync(int id) {
         var profile = await personRepository.GetRequiredAsync(id);
         
         var university = profile.UniversityId.HasValue 
@@ -48,7 +48,7 @@ public class PersonController(
     }
     
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteAsync(Guid id) {
+    public async Task<IActionResult> DeleteAsync(int id) {
         var profile = await personRepository.GetRequiredAsync(id);
         await personRepository.DeleteAsync(profile);
         return NoContent(); // 204 (Ok)

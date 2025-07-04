@@ -15,20 +15,20 @@ public class UniversityService(
 ) : IUniversityService {
 
     public async Task<University> AddAsync(UniversityCreateModel data) {
-        var university = new University { Id = Guid.NewGuid() };
-        await updateFields(university, data);
+        var university = new University();
+        await updateFieldsAsync(university, data);
         await universityRepository.AddAsync(university);
         return university;
     }
     
     public async Task<University> UpdateAsync(UniversityUpdateModel data) {
         var university = await universityRepository.GetRequiredAsync(data.Id);
-        await updateFields(university, data);
+        await updateFieldsAsync(university, data);
         await universityRepository.UpdateAsync(university);
         return university;
     }
 
-    private async Task updateFields(University university, UniversityCreateModel data) {
+    private async Task updateFieldsAsync(University university, UniversityCreateModel data) {
 
         var local = data.LocalId.HasValue
             ? await localRepository.GetAsync(data.LocalId.Value)

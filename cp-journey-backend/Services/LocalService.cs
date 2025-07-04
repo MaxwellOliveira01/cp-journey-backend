@@ -15,11 +15,10 @@ public class LocalService(
 ) : ILocalService {
 
     public async Task<Local> AddAsync(LocalCreateModel data) {
-        var local = new Local { Id = Guid.NewGuid() };
+        var local = new Local();
         updateFields(local, data);
         await localRepository.AddAsync(local);
-        return local;
-    }
+        return local; }
 
     public async Task<Local> UpdateAsync(LocalUpdateModel data) {
         var local = await localRepository.GetRequiredAsync(data.Id);

@@ -15,7 +15,7 @@ public class EventService(
 ) : IEventService {
 
     public async Task<Event> AddAsync(EventCreateModel data) {
-        var ev = new Event { Id = Guid.NewGuid() };
+        var ev = new Event();
         await updateFieldsAsync(ev, data);
         await eventRepository.AddAsync(ev);
         return ev;

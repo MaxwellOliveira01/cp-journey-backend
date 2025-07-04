@@ -13,7 +13,6 @@ public class TeamService(ITeamRepository teamRepository, ModelConverter modelCon
     
     public async Task<Team> AddAsync(CreateTeamModel data) {
         var team = new Team {
-            Id = Guid.NewGuid(),
             Name = data.Name,
             UniversityId = data.UniversityId
         };
