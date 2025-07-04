@@ -2,9 +2,9 @@
 
 public interface IDefaultRepository<T> {
     
-    Task<T?> GetAsync(Guid id);
+    Task<T?> GetAsync(int id);
     
-    async Task<T> GetRequiredAsync(Guid id) 
+    async Task<T> GetRequiredAsync(int id) 
         => await GetAsync(id) ?? throw new KeyNotFoundException($"Entity {nameof(T)} with ID {id} not found.");
     
     Task AddAsync(T entity);
