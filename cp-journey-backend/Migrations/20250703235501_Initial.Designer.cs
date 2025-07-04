@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using cp_journey_backend.Repositories;
 
 #nullable disable
@@ -11,37 +12,41 @@ using cp_journey_backend.Repositories;
 namespace cp_journey_backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250703010443_ProblemAndContest")]
-    partial class ProblemAndContest
+    [Migration("20250703235501_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "9.0.6");
+            modelBuilder
+                .HasAnnotation("ProductVersion", "9.0.6")
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("cp_journey_backend.Entities.Contest", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("EndDate")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("LocalId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(200)");
 
                     b.Property<string>("SiteUrl")
                         .HasMaxLength(250)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(250)");
 
                     b.Property<DateTime?>("StartDate")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -53,29 +58,29 @@ namespace cp_journey_backend.Migrations
             modelBuilder.Entity("cp_journey_backend.Entities.Event", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Description")
                         .HasMaxLength(500)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(500)");
 
                     b.Property<DateTime?>("End")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("LocalId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<DateTime?>("Start")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("WebsiteUrl")
                         .HasMaxLength(250)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(250)");
 
                     b.HasKey("Id");
 
@@ -87,10 +92,10 @@ namespace cp_journey_backend.Migrations
             modelBuilder.Entity("cp_journey_backend.Entities.EventParticipation", b =>
                 {
                     b.Property<Guid>("EventId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("PersonId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.HasKey("EventId", "PersonId");
 
@@ -102,19 +107,19 @@ namespace cp_journey_backend.Migrations
             modelBuilder.Entity("cp_journey_backend.Entities.Local", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("City")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("Country")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("State")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -124,20 +129,20 @@ namespace cp_journey_backend.Migrations
             modelBuilder.Entity("cp_journey_backend.Entities.Person", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Handle")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(200)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(200)");
 
                     b.Property<Guid?>("UniversityId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -149,29 +154,29 @@ namespace cp_journey_backend.Migrations
             modelBuilder.Entity("cp_journey_backend.Entities.Problem", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("ContestId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Label")
                         .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(10)");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(200)");
 
                     b.Property<int>("Order")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.Property<Guid?>("SetterId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<byte[]>("StatementPdf")
-                        .HasColumnType("BLOB");
+                        .HasColumnType("bytea");
 
                     b.HasKey("Id");
 
@@ -182,18 +187,47 @@ namespace cp_journey_backend.Migrations
                     b.ToTable("Problems");
                 });
 
+            modelBuilder.Entity("cp_journey_backend.Entities.Submission", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("Accepted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("Penalty")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("ProblemId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("TeamResultId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Tries")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProblemId");
+
+                    b.HasIndex("TeamResultId");
+
+                    b.ToTable("Submission");
+                });
+
             modelBuilder.Entity("cp_journey_backend.Entities.Team", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<Guid?>("UniversityId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -205,10 +239,10 @@ namespace cp_journey_backend.Migrations
             modelBuilder.Entity("cp_journey_backend.Entities.TeamMember", b =>
                 {
                     b.Property<Guid>("PersonId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("TeamId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.HasKey("PersonId", "TeamId");
 
@@ -217,23 +251,49 @@ namespace cp_journey_backend.Migrations
                     b.ToTable("TeamMembers");
                 });
 
+            modelBuilder.Entity("cp_journey_backend.Entities.TeamResult", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ContestId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Penalty")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("TeamId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ContestId");
+
+                    b.HasIndex("TeamId");
+
+                    b.ToTable("TeamResult");
+                });
+
             modelBuilder.Entity("cp_journey_backend.Entities.University", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Alias")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(20)");
 
                     b.Property<Guid?>("LocalId")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("character varying(200)");
 
                     b.HasKey("Id");
 
@@ -301,6 +361,25 @@ namespace cp_journey_backend.Migrations
                     b.Navigation("Setter");
                 });
 
+            modelBuilder.Entity("cp_journey_backend.Entities.Submission", b =>
+                {
+                    b.HasOne("cp_journey_backend.Entities.Problem", "Problem")
+                        .WithMany("Submissions")
+                        .HasForeignKey("ProblemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("cp_journey_backend.Entities.TeamResult", "TeamResult")
+                        .WithMany("Submissions")
+                        .HasForeignKey("TeamResultId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Problem");
+
+                    b.Navigation("TeamResult");
+                });
+
             modelBuilder.Entity("cp_journey_backend.Entities.Team", b =>
                 {
                     b.HasOne("cp_journey_backend.Entities.University", "University")
@@ -329,6 +408,25 @@ namespace cp_journey_backend.Migrations
                     b.Navigation("Team");
                 });
 
+            modelBuilder.Entity("cp_journey_backend.Entities.TeamResult", b =>
+                {
+                    b.HasOne("cp_journey_backend.Entities.Contest", "Contest")
+                        .WithMany("TeamResults")
+                        .HasForeignKey("ContestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("cp_journey_backend.Entities.Team", "Team")
+                        .WithMany("Results")
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Contest");
+
+                    b.Navigation("Team");
+                });
+
             modelBuilder.Entity("cp_journey_backend.Entities.University", b =>
                 {
                     b.HasOne("cp_journey_backend.Entities.Local", "Local")
@@ -341,6 +439,8 @@ namespace cp_journey_backend.Migrations
             modelBuilder.Entity("cp_journey_backend.Entities.Contest", b =>
                 {
                     b.Navigation("Problems");
+
+                    b.Navigation("TeamResults");
                 });
 
             modelBuilder.Entity("cp_journey_backend.Entities.Event", b =>
@@ -364,9 +464,21 @@ namespace cp_journey_backend.Migrations
                     b.Navigation("Teams");
                 });
 
+            modelBuilder.Entity("cp_journey_backend.Entities.Problem", b =>
+                {
+                    b.Navigation("Submissions");
+                });
+
             modelBuilder.Entity("cp_journey_backend.Entities.Team", b =>
                 {
                     b.Navigation("Members");
+
+                    b.Navigation("Results");
+                });
+
+            modelBuilder.Entity("cp_journey_backend.Entities.TeamResult", b =>
+                {
+                    b.Navigation("Submissions");
                 });
 #pragma warning restore 612, 618
         }

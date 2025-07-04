@@ -29,14 +29,17 @@ builder.Services.AddSingleton<ModelConverter>();
 
 builder.Configuration.AddUserSecrets<Program>();
 
-var databasePath = Path.Combine(builder.Environment.ContentRootPath, "Database");
+// var databasePath = Path.Combine(builder.Environment.ContentRootPath, "Database");
+// Directory.CreateDirectory(databasePath);
+// var connectionString = $"Data Source={Path.Combine(databasePath, "app.db")}";
+// builder.Services.AddDbContext<AppDbContext>(options 
+//     => options.UseSqlite(connectionString));
 
-Directory.CreateDirectory(databasePath);
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-var connectionString = $"Data Source={Path.Combine(databasePath, "app.db")}";
-
-builder.Services.AddDbContext<AppDbContext>(options 
-    => options.UseSqlite(connectionString));
+builder.Services.AddDbContext<AppDbContext>(options => {
+    options.UseNpgsql(connectionString);
+});
 
 // TODO: improve this policy before putting it in production
 builder.Services.AddCors(options => {
