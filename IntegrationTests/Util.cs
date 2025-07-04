@@ -1,4 +1,4 @@
-﻿using cp_journey_backend.Api;
+using cp_journey_backend.Api;
 using System.Net.Http.Json;
 
 namespace IntegrationTests {
@@ -16,9 +16,10 @@ namespace IntegrationTests {
             createResponse.EnsureSuccessStatusCode();
 
             return await createResponse.Content.ReadFromJsonAsync<LocalModel>();
+            
         }
 
-        public static async Task<UniversityModel> CreateUniversityAsync(HttpClient httpClient, Guid? localId = null) {
+        public static async Task<UniversityModel> CreateUniversityAsync(HttpClient httpClient, int? localId = null) {
 
             if(!localId.HasValue) {
                 var local = await CreateLocalAsync(httpClient);
@@ -35,7 +36,7 @@ namespace IntegrationTests {
             return await createResponse.Content.ReadFromJsonAsync<UniversityModel>();
         }
         
-        public static async Task<PersonModel> CreatePersonAsync(HttpClient httpClient, Guid? universityId = null) {
+        public static async Task<PersonModel> CreatePersonAsync(HttpClient httpClient, int? universityId = null) {
             if (!universityId.HasValue) {
                 var university = await CreateUniversityAsync(httpClient);
                 universityId = university.Id;
@@ -50,7 +51,7 @@ namespace IntegrationTests {
             return await createResponse.Content.ReadFromJsonAsync<PersonModel>();
         }
 
-        public static async Task<ContestModel> CreateContestAsync(HttpClient httpClient, Guid? localId = null) {
+        public static async Task<ContestModel> CreateContestAsync(HttpClient httpClient, int? localId = null) {
             if (!localId.HasValue) {
                 var local = await CreateLocalAsync(httpClient);
                 localId = local.Id;
@@ -70,7 +71,7 @@ namespace IntegrationTests {
             return await createResponse.Content.ReadFromJsonAsync<ContestModel>();
         }
 
-        public static async Task<EventModel> CreateEventAsync(HttpClient httpClient, Guid? localId = null) {
+        public static async Task<EventModel> CreateEventAsync(HttpClient httpClient, int? localId = null) {
             if (!localId.HasValue) {
                 var local = await CreateLocalAsync(httpClient);
                 localId = local.Id;
@@ -92,7 +93,7 @@ namespace IntegrationTests {
             return await createResponse.Content.ReadFromJsonAsync<EventModel>();
         }
 
-        public static async Task<ProblemModel> CreateProblemAsync(HttpClient httpClient, Guid? contestId = null, Guid? setterId = null) {
+        public static async Task<ProblemModel> CreateProblemAsync(HttpClient httpClient, int? contestId = null, int? setterId = null) {
             if (!contestId.HasValue) {
                 var contest = await CreateContestAsync(httpClient);
                 contestId = contest.Id;
