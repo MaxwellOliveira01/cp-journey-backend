@@ -2,7 +2,7 @@
 
     public class EventModel {
         
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         
         public string Name { get; set; }
         
@@ -34,14 +34,14 @@
         
         public string? WebsiteUrl { get; set; }
         
-        public Guid? LocalId { get; set; }
+        public int? LocalId { get; set; }
         
-        public List<Guid> ParticipantIds { get; set; }
+        public List<int> ParticipantIds { get; set; }
         
     }
 
     public class EventUpdateModel : EventCreateModel {
         
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         
     }

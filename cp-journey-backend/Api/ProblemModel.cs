@@ -4,7 +4,7 @@ namespace cp_journey_backend.Api;
 
 public class ProblemModel {
     
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     
     public string Name { get; set; }
 
@@ -34,17 +34,14 @@ public class ProblemCreateModel {
     
     // public byte[] StatementPdf { get; set; }
     
-    public Guid ContestId { get; set; }
+    public int ContestId { get; set; }
     
-    public Guid? SetterId { get; set; }
+    public int? SetterId { get; set; }
     
 }
 
 public class ProblemUpdateModel : ProblemCreateModel{
     
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     
 }
-
-
-

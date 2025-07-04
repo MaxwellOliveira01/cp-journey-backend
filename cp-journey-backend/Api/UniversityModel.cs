@@ -2,7 +2,7 @@ namespace cp_journey_backend.Api;
 
 public class UniversityModel {
     
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     
     public string Name { get; set; }
     
@@ -28,12 +28,12 @@ public class UniversityCreateModel {
     
     public string Alias { get; set; }
     
-    public Guid? LocalId { get; set; }
+    public int? LocalId { get; set; }
     
 }
 
 public class UniversityUpdateModel : UniversityCreateModel {
     
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     
 }

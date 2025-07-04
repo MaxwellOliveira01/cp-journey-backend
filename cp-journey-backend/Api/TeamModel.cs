@@ -4,7 +4,7 @@ namespace cp_journey_backend.Api;
 
 public class TeamModel {
     
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     
     public string Name { get; set; }
     
@@ -25,14 +25,14 @@ public class CreateTeamModel {
     
     public string Name { get; set; }
     
-    public Guid? UniversityId { get; set; }
+    public int? UniversityId { get; set; }
     
-    public List<Guid> MemberIds { get; set; }
+    public List<int> MemberIds { get; set; }
     
 }
 
 public class UpdateTeamModel : CreateTeamModel {
     
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     
 }

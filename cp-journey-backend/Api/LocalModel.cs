@@ -2,7 +2,7 @@ namespace cp_journey_backend.Api;
 
 public class LocalModel {
     
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     
     public string City { get; set; }
     
@@ -28,7 +28,7 @@ public class LocalCreateModel {
 
 public class LocalUpdateModel : LocalCreateModel{
     
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     
 }
 

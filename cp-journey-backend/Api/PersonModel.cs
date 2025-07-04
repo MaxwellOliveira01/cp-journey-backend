@@ -2,7 +2,7 @@ namespace cp_journey_backend.Api;
 
 public class PersonModel {
 
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     
     public string Name { get; set; }
     
@@ -34,12 +34,12 @@ public class PersonCreateModel {
     
     public string Handle { get; set; }
 
-    public Guid? UniversityId { get; set; }
+    public int? UniversityId { get; set; }
     
 }
 
 public class PersonUpdateModel : PersonCreateModel {
     
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     
 }

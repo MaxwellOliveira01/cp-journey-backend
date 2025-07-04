@@ -2,7 +2,7 @@ namespace cp_journey_backend.Api;
 
 public class ContestModel {
     
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     
     public string Name { get; set; }
     
@@ -34,12 +34,12 @@ public class ContestCreateModel {
     
     public DateTime? EndDate { get; set; }
     
-    public Guid? LocalId { get; set; }
+    public int? LocalId { get; set; }
     
 }
 
 public class ContestUpdateModel : ContestCreateModel {
     
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     
 }
