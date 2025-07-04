@@ -37,8 +37,8 @@ namespace IntegrationTests {
             Assert.Equal(createModel.Name, eventModel.Name);
             Assert.Equal(createModel.Description, eventModel.Description);
             Assert.Equal(createModel.WebsiteUrl, eventModel.WebsiteUrl);
-            Assert.True(Util.CompareDates(createModel.Start, eventModel.Start.Value));
-            Assert.True(Util.CompareDates(createModel.End, eventModel.End.Value));
+            Assert.True(Util.CompareDates(createModel.Start.Value, eventModel.Start.Value));
+            Assert.True(Util.CompareDates(createModel.End.Value, eventModel.End.Value));
         }
 
         [Fact]
@@ -61,8 +61,8 @@ namespace IntegrationTests {
             Assert.Equal(updateModel.Name, updated.Name);
             Assert.Equal(updateModel.Description, updated.Description);
             Assert.Equal(updateModel.WebsiteUrl, updated.WebsiteUrl);
-            Assert.True(Util.CompareDates(updated.Start.Value, updateModel.Start));
-            Assert.True(Util.CompareDates(updated.End.Value, updateModel.End));
+            Assert.True(Util.CompareDates(updated.Start.Value, updateModel.Start.Value));
+            Assert.True(Util.CompareDates(updated.End.Value, updateModel.End.Value));
         }
 
         [Fact]

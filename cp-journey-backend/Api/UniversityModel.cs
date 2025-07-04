@@ -18,8 +18,6 @@ public class UniversityFullModel : UniversityModel {
     
     public List<TeamModel> Teams { get; set; }
     
-    public List<ContestModel> Contests { get; set; }
-    
 }
 
 public class UniversityCreateModel {
