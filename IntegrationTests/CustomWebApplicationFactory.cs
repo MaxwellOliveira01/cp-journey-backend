@@ -5,13 +5,14 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Data.Common;
+using Microsoft.Extensions.Configuration;
 
 namespace IntegrationTests {
     public class CustomWebApplicationFactory : WebApplicationFactory<Program> {
 
         protected override void ConfigureWebHost(IWebHostBuilder builder) {
 
-            builder.ConfigureServices(services => {
+            builder.ConfigureServices((context, services) => {
 
                 var dbContextOptionsDescriptors = services
                     .Where(d => d.ServiceType == typeof(DbContextOptions<AppDbContext>))
@@ -27,17 +28,20 @@ namespace IntegrationTests {
                 foreach (var descriptor in appDbContextDescriptors)
                     services.Remove(descriptor);
 
-                services.AddSingleton<DbConnection>(container => {
-                    var connection = new SqliteConnection("Filename=:memory:");
-                    connection.Open();
-                    return connection;
-                });
+                var config = context.Configuration;
+                
+                var connectionString = config.GetConnectionString("TestDatabase")
+                    ?? throw new InvalidOperationException("Connection string 'TestDatabase' not found in configuration.");
+                
+                services.AddDbContext<AppDbContext>(options => 
+                    options.UseNpgsql(connectionString)
+                );
 
-                services.AddDbContext<AppDbContext>((container, options)=> {
-                    var connection = container.GetRequiredService<DbConnection>();
-                    options.UseSqlite(connection);
-                });
-
+                using (var scope = services.BuildServiceProvider().CreateScope()) {
+                    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                    db.Database.Migrate();
+                }
+                
             });
         }
 

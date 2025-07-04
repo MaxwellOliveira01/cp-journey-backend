@@ -21,7 +21,7 @@ public class ProblemController(
         var setter = problem.SetterId.HasValue 
             ? await personRepository.GetRequiredAsync(problem.SetterId.Value) 
             : null;
-        var contest = await contestRepository.GetRequiredAsync(id);
+        var contest = await contestRepository.GetRequiredAsync(problem.ContestId);
         return modelConverter.ToFullModel(problem, setter, contest);
     }
     
