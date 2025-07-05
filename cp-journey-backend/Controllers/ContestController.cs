@@ -10,13 +10,19 @@ namespace cp_journey_backend.Controllers;
 public class ContestController(
     IContestRepository contestRepository,
     IContestService contestService,
+    ILocalRepository localRepository,
     ModelConverter modelConverter
 ) : ControllerBase{
     
     [HttpGet("{id}")]
-    public async Task<ContestModel> Get(int id) {
+    public async Task<ContestFullModel> Get(int id) {
         var contest = await contestRepository.GetRequiredAsync(id);
-        return modelConverter.ToModel(contest);
+        
+        var local = contest.LocalId.HasValue
+            ? await localRepository.GetAsync(contest.LocalId.Value)
+            : null;
+        
+        return modelConverter.ToFullModel(contest, local);
     }
 
     [HttpPost]
@@ -41,6 +47,12 @@ public class ContestController(
     [HttpGet("list")] // TODO: implement pagination
     public async Task<List<ContestModel>> ListAsync() {
         var contests = await contestRepository.ListAsync();
+        return [..contests.ConvertAll(modelConverter.ToModel)];
+    }
+    
+    [HttpGet("filter")] // TODO: implement pagination
+    public async Task<List<ContestModel>> ListAsync(string? pref) {
+        var contests = await contestRepository.FilterAsync(pref);
         return [..contests.ConvertAll(modelConverter.ToModel)];
     }
     

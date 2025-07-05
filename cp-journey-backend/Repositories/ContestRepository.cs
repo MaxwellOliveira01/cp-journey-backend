@@ -5,6 +5,8 @@ namespace cp_journey_backend.Repositories;
 
 public interface IContestRepository : IDefaultRepository<Contest> {
     
+    Task<List<Contest>> FilterAsync(string? nameFilter);
+    
 }
 
 public class ContestRepository(AppDbContext appDbContext) : IContestRepository {
@@ -39,5 +41,15 @@ public class ContestRepository(AppDbContext appDbContext) : IContestRepository {
         return appDbContext.Database.ExecuteSqlRawAsync(sql, entity.Id, entity.Name, entity.SiteUrl, entity.StartDate,
             entity.EndDate, entity.LocalId);
     }
+    
+    public async Task<List<Contest>> FilterAsync(string? nameFilter) {
+        if (string.IsNullOrEmpty(nameFilter)) {
+            return await ListAsync();
+        }
+        
+        const string sql = "SELECT * FROM \"Contests\" WHERE LOWER(\"Name\") LIKE {0}";
+        return await appDbContext.Contests.FromSqlRaw(sql, $"%{nameFilter}%").ToListAsync();
+    }
+    
     
 }

@@ -82,7 +82,7 @@ public class ModelConverter {
         };
     }
     
-    public UniversityFullModel ToFullModel(University university, Local? local, List<Person> students, List<Team> teams /*,List<Contest> contests*/) {
+    public UniversityFullModel ToFullModel(University university, Local? local, List<Person> students, List<Team> teams) {
         return new UniversityFullModel {
             Id = university.Id,
             Name = university.Name,
@@ -128,14 +128,14 @@ public class ModelConverter {
         };
     }
     
-    public ContestFullModel ToFullModel(Contest contest, Local local /*, List<TeamResult> ranking*/) {
+    public ContestFullModel ToFullModel(Contest contest, Local? local /*, List<TeamResult> ranking*/) {
         return new ContestFullModel {
             Id = contest.Id,
             Name = contest.Name,
             SiteUrl = contest.SiteUrl,
             StartDate = contest.StartDate,
             EndDate = contest.EndDate,
-            Local = ToModel(local),
+            Local = local != null ? ToModel(local) : null,
         };
     }
 
