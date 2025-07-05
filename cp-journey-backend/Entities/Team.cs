@@ -5,7 +5,7 @@ namespace cp_journey_backend.Entities;
 
 public class Team {
     
-    [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
+    [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
     [MaxLength(100)]

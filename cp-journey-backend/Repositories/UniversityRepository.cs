@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace cp_journey_backend.Repositories;
 
 public interface IUniversityRepository : IDefaultRepository<University> {
-    
+    Task<List<University>> FilterAsync(string? prefix);
 }
 
 public class UniversityRepository(AppDbContext appDbContext) : IUniversityRepository {
@@ -45,6 +45,14 @@ public class UniversityRepository(AppDbContext appDbContext) : IUniversityReposi
     public async Task<List<University>> ListAsync() {
         const string sql = "SELECT * FROM \"Universities\"";
         return await appDbContext.Universities.FromSqlRaw(sql).ToListAsync();
+    }
+    
+    public async Task<List<University>> FilterAsync(string? prefix) {
+        if (string.IsNullOrEmpty(prefix)) {
+            return await ListAsync();
+        }
+        var sql = "SELECT * FROM \"Universities\" WHERE LOWER(\"Name\") LIKE {0} OR LOWER(\"Alias\") LIKE LOWER({0})";
+        return await appDbContext.Universities.FromSqlRaw(sql, $"%{prefix}%").ToListAsync();
     }
 
 }

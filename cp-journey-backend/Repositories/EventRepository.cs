@@ -5,7 +5,7 @@ namespace cp_journey_backend.Repositories;
 
 public interface IEventRepository : IDefaultRepository<Event> {
     Task<List<Event>> ListByUserAsync(int id);
-    
+    Task<List<Event>> FilterAsync(string? prefix);
 }
 
 public class EventRepository(AppDbContext appDbContext) : IEventRepository {
@@ -66,6 +66,15 @@ public class EventRepository(AppDbContext appDbContext) : IEventRepository {
                            "WHERE ep.\"PersonId\" = {0}";
         
         return await appDbContext.Events.FromSqlRaw(sql, userId).ToListAsync();
+    }
+    
+    public async Task<List<Event>> FilterAsync(string? prefix) {
+        if (string.IsNullOrEmpty(prefix)) {
+            return await ListAsync();
+        }
+        
+        const string sql = "SELECT * FROM \"Events\" WHERE \"Name\" LIKE {0}";
+        return await appDbContext.Events.FromSqlRaw(sql, $"%{prefix}%").ToListAsync();
     }
     
 }

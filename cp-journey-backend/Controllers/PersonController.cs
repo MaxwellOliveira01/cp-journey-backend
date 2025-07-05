@@ -30,8 +30,8 @@ public class PersonController(
     }
 
     [HttpGet("list/search-model")] // TODO: implement pagination
-    public async Task<List<PersonSearchModel>> ListSearchModelAsync() {
-        var persons = await personRepository.ListAsync();
+    public async Task<List<PersonSearchModel>> ListSearchModelAsync(string? prefix, int? universityId) {
+        var persons = await personRepository.FilterAsync(prefix, universityId);
         
         var tasks = persons.Select(async p => {
             var university = p.UniversityId.HasValue
