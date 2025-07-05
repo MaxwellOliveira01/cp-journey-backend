@@ -45,8 +45,8 @@ public class TeamRepository(AppDbContext appDbContext) : ITeamRepository {
     }
 
     public async Task UpdateAsync(Team team) {
-        const string sql = "UPDATE \"Teams\" SET \"UniversityId\" = {1} WHERE \"Id\" = {0}";
-        await appDbContext.Database.ExecuteSqlRawAsync(sql, team.Id, team.UniversityId);
+        const string sql = "UPDATE \"Teams\" SET \"Name\" = {1}, \"UniversityId\" = {2} WHERE \"Id\" = {0}";
+        await appDbContext.Database.ExecuteSqlRawAsync(sql, team.Id, team.Name, team.UniversityId);
         
         const string deleteMembersSql = "DELETE FROM \"TeamMembers\" WHERE \"TeamId\" = {0}";
         await appDbContext.Database.ExecuteSqlRawAsync(deleteMembersSql, team.Id);
