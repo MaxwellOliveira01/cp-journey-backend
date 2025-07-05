@@ -73,7 +73,7 @@ public class EventRepository(AppDbContext appDbContext) : IEventRepository {
             return await ListAsync();
         }
         
-        const string sql = "SELECT * FROM \"Events\" WHERE \"Name\" LIKE {0}";
+        const string sql = "SELECT * FROM \"Events\" WHERE LOWER(\"Name\") LIKE LOWER({0})";
         return await appDbContext.Events.FromSqlRaw(sql, $"%{prefix}%").ToListAsync();
     }
     
