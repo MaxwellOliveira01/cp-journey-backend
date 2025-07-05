@@ -45,8 +45,8 @@ public class EventController(
     }
 
     [HttpGet("list")] // TODO: implement pagination
-    public async Task<List<EventModel>> ListAsync() {
-        var events = await eventRepository.ListAsync();
+    public async Task<List<EventModel>> ListAsync(string? prefix) {
+        var events = await eventRepository.FilterAsync(prefix);
         return [..events.ConvertAll(modelConverter.ToModel)];
     }
 }

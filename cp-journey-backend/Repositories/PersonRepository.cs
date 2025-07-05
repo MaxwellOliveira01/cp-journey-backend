@@ -5,6 +5,8 @@ namespace cp_journey_backend.Repositories;
 
 public interface IPersonRepository : IDefaultRepository<Person> {
 
+    Task<List<Person>> FilterAsync(string? prefix, int? universityId);
+    
     Task<List<Person>> ListByUniversityAsync(int universityId);
 
     Task<List<Person>> ListByEventAsync(int eventId);
@@ -66,6 +68,33 @@ public class PersonRepository(AppDbContext appDbContext) : IPersonRepository {
             JOIN ""TeamMembers"" tm ON p.""Id"" = tm.""PersonId""
             WHERE tm.""TeamId"" = {0}";
         return await appDbContext.Persons.FromSqlRaw(sql, teamId).ToListAsync();
+    }
+    
+    public async Task<List<Person>> FilterAsync(string? prefix, int? universityId) {
+        var sql = "SELECT * FROM \"Persons\"";
+        var conditions = new List<string>();
+            var parameters = new List<object>();
+
+        if (!string.IsNullOrEmpty(prefix)) {
+            conditions.Add("(LOWER(\"Name\") LIKE LOWER({0}) OR LOWER(\"Handle\") LIKE LOWER({1}))");
+            parameters.Add($"%{prefix}%");
+            parameters.Add($"%{prefix}%");
+        }
+
+        if (universityId.HasValue) {
+            if (parameters.Count == 0) {
+                conditions.Add("\"UniversityId\" = {0}");
+            } else {
+              conditions.Add("\"UniversityId\" = {2}");  
+            }
+            parameters.Add(universityId.Value);
+        }
+
+        if (conditions.Count > 0) {
+            sql += " WHERE " + string.Join(" AND ", conditions);
+        }
+
+        return await appDbContext.Persons.FromSqlRaw(sql, parameters.ToArray()).ToListAsync();
     }
 
 }

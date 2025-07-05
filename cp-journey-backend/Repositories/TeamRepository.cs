@@ -6,6 +6,8 @@ namespace cp_journey_backend.Repositories;
 
 public interface ITeamRepository : IDefaultRepository<Team> {
     
+    Task<List<Team>> FilterAsync(string? prefix, int? universityId);
+    
     Task<List<Team>> ListByUserAsync(int userId);
 
     Task<List<Team>> ListByUniversityAsync(int universityId);
@@ -65,6 +67,24 @@ public class TeamRepository(AppDbContext appDbContext) : ITeamRepository {
     public async Task<List<Team>> ListByUniversityAsync(int universityId) {
         const string sql = "SELECT * FROM \"Teams\" WHERE \"UniversityId\" = {0}";
         return await appDbContext.Teams.FromSqlRaw(sql, universityId).ToListAsync();
+    }
+    
+    public async Task<List<Team>> FilterAsync(string? prefix, int? universityId) {
+        if (string.IsNullOrEmpty(prefix) && !universityId.HasValue) {
+            return await ListAsync();
+        }
+        
+        var sql = "SELECT * FROM \"Teams\" WHERE 1 = 1"; // 1 = 1 is just a trick
+        
+        if (!string.IsNullOrEmpty(prefix)) {
+            sql += " AND \"Name\" LIKE {0}";
+        }
+        
+        if (universityId.HasValue) {
+            sql += " AND \"UniversityId\" = {1}";
+        }
+        
+        return await appDbContext.Teams.FromSqlRaw(sql, $"%{prefix}%", universityId).ToListAsync();
     }
     
 }

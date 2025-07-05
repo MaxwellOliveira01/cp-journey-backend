@@ -53,9 +53,8 @@ public class UniversityController(
     }
     
     [HttpGet("list/search-model")]
-    public async Task<List<UniversitySearchModel>> ListSearchModelAsync() {
-        var universities = await universityRepository.ListAsync();
-
+    public async Task<List<UniversitySearchModel>> ListSearchModelAsync(string? prefix) {
+        var universities = await universityRepository.FilterAsync(prefix);
         var tasks = universities.Select(async s => {
             var local = s.LocalId.HasValue
                 ? await localRepository.GetAsync(s.LocalId.Value)
