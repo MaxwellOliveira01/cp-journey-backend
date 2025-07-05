@@ -77,7 +77,7 @@ public class TeamRepository(AppDbContext appDbContext) : ITeamRepository {
         var sql = "SELECT * FROM \"Teams\" WHERE 1 = 1"; // 1 = 1 is just a trick
         
         if (!string.IsNullOrEmpty(prefix)) {
-            sql += " AND \"Name\" LIKE {0}";
+            sql += " AND LOWER(\"Name\") LIKE LOWER({0})";
         }
         
         if (universityId.HasValue) {
