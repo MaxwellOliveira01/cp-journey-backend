@@ -20,6 +20,11 @@ public class TeamFullModel : TeamModel {
     
 }
 
+public class TeamSearchModel : TeamModel {
+    
+    public UniversityModel? University { get; set; }
+    
+}
 
 public class CreateTeamModel {
     

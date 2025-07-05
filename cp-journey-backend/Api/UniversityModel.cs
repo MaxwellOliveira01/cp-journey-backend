@@ -20,6 +20,10 @@ public class UniversityFullModel : UniversityModel {
     
 }
 
+public class UniversitySearchModel : UniversityModel {
+    public LocalModel? Local { get; set; }
+}
+
 public class UniversityCreateModel {
     
     public string Name { get; set; }

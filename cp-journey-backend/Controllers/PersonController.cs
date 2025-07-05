@@ -29,6 +29,22 @@ public class PersonController(
         return modelConverter.ToFullModel(profile, university, teams, events);
     }
 
+    [HttpGet("list/search-model")] // TODO: implement pagination
+    public async Task<List<PersonSearchModel>> ListSearchModelAsync() {
+        var persons = await personRepository.ListAsync();
+        
+        var tasks = persons.Select(async p => {
+            var university = p.UniversityId.HasValue
+                ? await universityRepository.GetAsync(p.UniversityId.Value)
+                : null;
+
+            return modelConverter.ToSearchModel(p, university);
+        });
+        
+        var results = await Task.WhenAll(tasks);
+        return results.ToList();
+    }
+    
     [HttpGet("list")] // TODO: implement pagination
     public async Task<List<PersonModel>> ListAsync() {
         var persons = await personRepository.ListAsync();

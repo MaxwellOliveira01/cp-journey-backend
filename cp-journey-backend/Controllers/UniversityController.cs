@@ -52,4 +52,20 @@ public class UniversityController(
         return [..universities.ConvertAll(modelConverter.ToModel)];
     }
     
+    [HttpGet("list/search-model")]
+    public async Task<List<UniversitySearchModel>> ListSearchModelAsync() {
+        var universities = await universityRepository.ListAsync();
+
+        var tasks = universities.Select(async s => {
+            var local = s.LocalId.HasValue
+                ? await localRepository.GetAsync(s.LocalId.Value)
+                : null;
+
+            return modelConverter.ToSearchModel(s, local);
+        });
+
+        var results = await Task.WhenAll(tasks);
+        return results.ToList();
+    }
+    
 }

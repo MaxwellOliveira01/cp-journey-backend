@@ -112,6 +112,7 @@ public class ModelConverter {
             Name = team.Name,
             Members = members.ConvertAll(ToModel),
             University = university != null ? ToModel(university) : null,
+            Contests = [],
         };
     }
     
@@ -134,9 +135,38 @@ public class ModelConverter {
             SiteUrl = contest.SiteUrl,
             StartDate = contest.StartDate,
             EndDate = contest.EndDate,
-            Local = ToModel(local)
+            Local = ToModel(local),
+        };
+    }
+
+    public UniversitySearchModel ToSearchModel(University university, Local? local) {
+        // TODO: reaproveitar ToModel
+        return new UniversitySearchModel {
+            Id = university.Id,
+            Name = university.Name,
+            Alias = university.Alias,
+            Local = local != null ? ToModel(local) : null
         };
     }
     
+    public PersonSearchModel ToSearchModel(Person person, University? university) {
+        // TODO: reaproveitar ToModel
+        return new PersonSearchModel {
+            Id = person.Id,
+            Name = person.Name,
+            Handle = person.Handle,
+            University = university != null ? ToModel(university) : null
+        };
+    }
     
+    public TeamSearchModel ToSearchModel(Team team, University? university) {
+        // TODO: reaproveitar ToModel
+        return new TeamSearchModel {
+            Id = team.Id,
+            Name = team.Name,
+            University = university != null ? ToModel(university) : null
+        };
+    }
+    
+
 }
