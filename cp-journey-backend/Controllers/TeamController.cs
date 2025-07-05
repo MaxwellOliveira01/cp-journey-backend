@@ -51,17 +51,17 @@ public class TeamController(
     [HttpGet("list/search-model")] // TODO: implement pagination
     public async Task<List<TeamSearchModel>> ListSearchAsync(string? prefix, int? universityId) {
         var teams = await teamRepository.FilterAsync(prefix, universityId);
+        var results = new List<TeamSearchModel>();
         
-        var tasks = teams.Select(async t => {
-            var university = t.UniversityId.HasValue
-                ? await universityRepository.GetAsync(t.UniversityId.Value)
+        foreach (var team in teams) {
+            var university = team.UniversityId.HasValue
+                ? await universityRepository.GetAsync(team.UniversityId.Value)
                 : null;
 
-            return modelConverter.ToSearchModel(t, university);
-        });
+            results.Add(modelConverter.ToSearchModel(team, university));
+        }
         
-        var results = await Task.WhenAll(tasks);
-        return results.ToList();;
+        return results;
     }
     
 }

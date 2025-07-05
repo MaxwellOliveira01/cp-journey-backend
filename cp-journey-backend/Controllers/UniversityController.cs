@@ -55,16 +55,18 @@ public class UniversityController(
     [HttpGet("list/search-model")]
     public async Task<List<UniversitySearchModel>> ListSearchModelAsync(string? prefix) {
         var universities = await universityRepository.FilterAsync(prefix);
-        var tasks = universities.Select(async s => {
-            var local = s.LocalId.HasValue
-                ? await localRepository.GetAsync(s.LocalId.Value)
+    
+        var results = new List<UniversitySearchModel>();
+        
+        foreach (var university in universities) {
+            var local = university.LocalId.HasValue
+                ? await localRepository.GetAsync(university.LocalId.Value)
                 : null;
 
-            return modelConverter.ToSearchModel(s, local);
-        });
+            results.Add(modelConverter.ToSearchModel(university, local));
+        }
 
-        var results = await Task.WhenAll(tasks);
-        return results.ToList();
+        return results;
     }
     
 }

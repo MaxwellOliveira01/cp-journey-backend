@@ -32,17 +32,19 @@ public class PersonController(
     [HttpGet("list/search-model")] // TODO: implement pagination
     public async Task<List<PersonSearchModel>> ListSearchModelAsync(string? prefix, int? universityId) {
         var persons = await personRepository.FilterAsync(prefix, universityId);
-        
-        var tasks = persons.Select(async p => {
-            var university = p.UniversityId.HasValue
-                ? await universityRepository.GetAsync(p.UniversityId.Value)
+
+        var results = new List<PersonSearchModel>();
+
+        foreach (var person in persons) {
+            var university = person.UniversityId.HasValue
+                ? await universityRepository.GetAsync(person.UniversityId.Value)
                 : null;
 
-            return modelConverter.ToSearchModel(p, university);
-        });
-        
-        var results = await Task.WhenAll(tasks);
-        return results.ToList();
+            results.Add(modelConverter.ToSearchModel(person, university));
+        }
+
+        return results;
+
     }
     
     [HttpGet("list")] // TODO: implement pagination
