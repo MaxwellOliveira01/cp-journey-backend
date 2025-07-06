@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cp-journey-backend", "cp-jo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{129634C1-0E42-4A20-953A-E21471FD1B72}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UploadPdfHelper", "UploadPdfHelper\UploadPdfHelper.csproj", "{629C5E5F-700E-4940-BFD6-08BD060393EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{129634C1-0E42-4A20-953A-E21471FD1B72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{129634C1-0E42-4A20-953A-E21471FD1B72}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{129634C1-0E42-4A20-953A-E21471FD1B72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{629C5E5F-700E-4940-BFD6-08BD060393EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{629C5E5F-700E-4940-BFD6-08BD060393EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{629C5E5F-700E-4940-BFD6-08BD060393EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{629C5E5F-700E-4940-BFD6-08BD060393EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
