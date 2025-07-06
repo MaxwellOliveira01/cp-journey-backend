@@ -83,6 +83,17 @@ public class ModelConverter {
         };
     }
     
+    public TeamResultModel ToModel(TeamResult teamResult) {
+        return new TeamResultModel {
+            Id = teamResult.Id,
+            TeamId = teamResult.TeamId,
+            ContestId = teamResult.ContestId,
+            Position = teamResult.Position,
+            Penalty = teamResult.Penalty,
+        };
+    }
+    
+    
     public PersonFullModel ToFullModel(Person person, University? university, List<Team> teams, List<Event> events) {
         return new PersonFullModel {
             Id = person.Id,
@@ -118,13 +129,13 @@ public class ModelConverter {
         };
     }
     
-    public TeamFullModel ToFullModel(Team team, University? university, List<Person> members) {
+    public TeamFullModel ToFullModel(Team team, University? university, List<Person> members, List<TeamResult> teamResults) {
         return new TeamFullModel {
             Id = team.Id,
             Name = team.Name,
             Members = members.ConvertAll(ToModel),
             University = university != null ? ToModel(university) : null,
-            Contests = [],
+            Results = teamResults.ConvertAll(ToModel),
         };
     }
     

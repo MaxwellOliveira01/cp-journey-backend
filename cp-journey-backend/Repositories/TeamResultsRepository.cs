@@ -14,6 +14,8 @@ public interface ITeamResultsRepository {
     Task<bool> ExistsAsync(int teamId, int contestId);
 
     Task<TeamResult> GetByTeamAndContestAsync(int teamId, int contestId);
+    
+    Task<List<TeamResult>> ListByTeamAsync(int teamId);
 
 }
 
@@ -73,5 +75,11 @@ public class TeamResultsRepository(AppDbContext appDbContext) : ITeamResultsRepo
             .FirstOrDefaultAsync() ?? throw new KeyNotFoundException($"TeamResult for TeamId {teamId} and ContestId {contestId} not found.");
     }
     
+    public async Task<List<TeamResult>> ListByTeamAsync(int teamId) {
+        const string sql = "SELECT * FROM \"TeamResults\" WHERE \"TeamId\" = {0}";
+        return await appDbContext.TeamResults
+            .FromSqlRaw(sql, teamId)
+            .ToListAsync();
+    }
     
 }

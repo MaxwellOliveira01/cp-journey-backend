@@ -12,6 +12,7 @@ public class TeamController(
     ITeamService teamService,
     IPersonRepository personRepository,
     IUniversityRepository universityRepository,
+    ITeamResultsRepository teamResultsRepository,
     ModelConverter modelConverter
 ) : ControllerBase {
     
@@ -20,7 +21,8 @@ public class TeamController(
         var team = await teamRepository.GetRequiredAsync(id);
         var members = await personRepository.ListByTeamAsync(id);
         var university = team.UniversityId.HasValue ? await universityRepository.GetAsync(team.UniversityId.Value) : null;
-        return modelConverter.ToFullModel(team, university, members);
+        var results = await teamResultsRepository.ListByTeamAsync(id);
+        return modelConverter.ToFullModel(team, university, members, results);
     }
     
     [HttpPost]

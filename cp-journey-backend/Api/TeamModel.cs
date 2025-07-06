@@ -16,7 +16,7 @@ public class TeamFullModel : TeamModel {
     
     public UniversityModel? University { get; set; }
     
-    public List<ContestModel> Contests { get; set; }
+    public List<TeamResultModel> Results { get; set; }
     
 }
 
