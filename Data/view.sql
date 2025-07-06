@@ -1,0 +1,20 @@
+-- DROP VIEW IF EXISTS "ContestRanking";
+--
+-- CREATE VIEW "ContestRanking" AS
+-- SELECT
+--     c."Id" AS "ContestId",
+--     c."Name" AS "ContestName",
+--     t."Name" AS "TeamName",
+--     tr."Position",
+--     tr."Penalty"
+-- FROM
+--     "Contests" c
+--         JOIN
+--     "TeamResults" tr ON c."Id" = tr."ContestId"
+--         JOIN
+--     "Teams" t ON tr."TeamId" = t."Id"
+-- ORDER BY
+--     c."Id",
+--     tr."Position" ASC;
+--
+-- SELECT * FROM "ContestRanking" WHERE "ContestId" = '1';
