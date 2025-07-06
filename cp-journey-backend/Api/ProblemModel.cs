@@ -18,10 +18,6 @@ public class ProblemModel {
 
 public class ProblemFullModel : ProblemModel {
     
-    public byte[] StatementPdf { get; set; }
-    
-    public PersonModel? Setter { get; set; }
-    
     public ContestModel Contest { get; set; }
     
 }
@@ -37,8 +33,6 @@ public class ProblemCreateModel {
     // public byte[] StatementPdf { get; set; }
     
     public int ContestId { get; set; }
-    
-    public int? SetterId { get; set; }
     
 }
 

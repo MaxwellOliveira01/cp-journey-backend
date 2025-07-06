@@ -93,15 +93,10 @@ namespace IntegrationTests {
             return await createResponse.Content.ReadFromJsonAsync<EventModel>();
         }
 
-        public static async Task<ProblemModel> CreateProblemAsync(HttpClient httpClient, int? contestId = null, int? setterId = null) {
+        public static async Task<ProblemModel> CreateProblemAsync(HttpClient httpClient, int? contestId = null) {
             if (!contestId.HasValue) {
                 var contest = await CreateContestAsync(httpClient);
                 contestId = contest.Id;
-            }
-            
-            if (!setterId.HasValue) {
-                var person = await CreatePersonAsync(httpClient);
-                setterId = person.Id;
             }
             
             var createModel = new ProblemCreateModel() {
@@ -109,7 +104,6 @@ namespace IntegrationTests {
                 Label = "A",
                 Order = 1,
                 ContestId = contestId.Value,
-                SetterId = setterId,
             };
             var createResponse = await httpClient.PostAsJsonAsync("/api/problems", createModel);
             createResponse.EnsureSuccessStatusCode();

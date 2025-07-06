@@ -17,13 +17,11 @@ namespace IntegrationTests {
         [Fact]
         public async Task Post_CreatesProblem() {
             var contest = await Util.CreateContestAsync(httpClient);
-            var setter = await Util.CreatePersonAsync(httpClient);
             var createModel = new ProblemCreateModel {
                 Name = "Factorial",
                 Label = "C",
                 Order = 5,
                 ContestId = contest.Id,
-                SetterId = setter.Id
             };
             var response = await httpClient.PostAsJsonAsync("/api/problems", createModel);
             response.EnsureSuccessStatusCode();
@@ -44,7 +42,6 @@ namespace IntegrationTests {
                 Label = "G",
                 Order = 8,
                 ContestId = contest.Id,
-                SetterId = setter.Id
             };
             var response = await httpClient.PutAsJsonAsync("/api/problems", updateModel);
             response.EnsureSuccessStatusCode();

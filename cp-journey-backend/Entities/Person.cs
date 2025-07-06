@@ -12,11 +12,11 @@ public class Person {
     public string Name { get; set; }
     
     [MaxLength(200)]
-    public string Handle { get; set; }
+    public string? Handle { get; set; }
     
     public int? UniversityId { get; set; }
     
-    public University University { get; set; }
+    public University? University { get; set; }
     
     public List<TeamMember> Teams { get; set; }
     

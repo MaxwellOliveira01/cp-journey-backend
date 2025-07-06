@@ -18,4 +18,6 @@ public class University {
     
     public Local? Local { get; set; }
     
+    public List<Team> Teams { get; set; }
+    
 }

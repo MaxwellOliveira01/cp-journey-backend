@@ -18,11 +18,8 @@ public class ProblemController(
     [HttpGet("{id}")]
     public async Task<ProblemFullModel> Get(int id) {
         var problem = await problemRepository.GetRequiredAsync(id);
-        var setter = problem.SetterId.HasValue 
-            ? await personRepository.GetRequiredAsync(problem.SetterId.Value) 
-            : null;
         var contest = await contestRepository.GetRequiredAsync(problem.ContestId);
-        return modelConverter.ToFullModel(problem, setter, contest);
+        return modelConverter.ToFullModel(problem, contest);
     }
     
     [HttpPost]

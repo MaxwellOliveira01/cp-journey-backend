@@ -40,10 +40,10 @@ public class ProblemRepository(AppDbContext appDbContext) : IProblemRepository {
 
     public Task UpdateAsync(Problem entity) {
         const string sql = "UPDATE \"Problems\" SET \"Name\" = {1}, \"Label\" = {2}, \"Order\" = {3}, " +
-                           "\"ContestId\" = {4}, \"SetterId\" = {5} WHERE \"Id\" = {0}";
+                           "\"ContestId\" = {4} WHERE \"Id\" = {0}";
         
         return appDbContext.Database.ExecuteSqlRawAsync(sql, entity.Id, entity.Name, entity.Label,
-            entity.Order, entity.ContestId, entity.SetterId);
+            entity.Order, entity.ContestId);
     }
 
     public Task<List<Problem>> ListByContestAsync(int contestId) {

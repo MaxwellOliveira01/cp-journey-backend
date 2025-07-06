@@ -31,17 +31,11 @@ public class ProblemService(
 
     private async Task UpdateFieldsAsync(Problem problem, ProblemCreateModel data) {
         
-        var setter = data.SetterId.HasValue 
-            ? await personRepository.GetRequiredAsync(data.SetterId.Value) 
-            : null;
-
         var contest = await contestRepository.GetRequiredAsync(data.ContestId);
         
         problem.Name = data.Name;
         problem.Label = data.Label;
         problem.Order = data.Order;
-        problem.SetterId = data.SetterId;
-        problem.Setter = setter;
         problem.ContestId = data.ContestId;
         problem.Contest = contest;
         // problem.StatementPdf = data.StatementPdf;

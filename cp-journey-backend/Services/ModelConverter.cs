@@ -140,15 +140,13 @@ public class ModelConverter {
         };
     }
     
-    public ProblemFullModel ToFullModel(Problem problem, Person? setter, Contest contest) {
+    public ProblemFullModel ToFullModel(Problem problem, Contest contest) {
         return new ProblemFullModel {
             Id = problem.Id,
             ContestId = problem.ContestId,
             Name = problem.Name,
             Label = problem.Label,
             Order = problem.Order,
-            // StatementPdf = problem.StatementPdf,
-            Setter = setter != null ? ToModel(setter) : null,
             Contest = ToModel(contest),
         };
     }

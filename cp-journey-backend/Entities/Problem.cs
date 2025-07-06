@@ -20,9 +20,6 @@ public class Problem {
     public int ContestId { get; set; }
     public Contest Contest { get; set; }
      
-    public int? SetterId { get; set; }
-    public Person? Setter { get; set; }
-    
     public List<Submission> Submissions { get; set; }
     
 }
