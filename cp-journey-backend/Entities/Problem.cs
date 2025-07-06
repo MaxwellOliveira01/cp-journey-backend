@@ -17,8 +17,6 @@ public class Problem {
     
     public int Order { get; set; }
 
-    public byte[]? StatementPdf { get; set; }
-    
     public int ContestId { get; set; }
     public Contest Contest { get; set; }
      

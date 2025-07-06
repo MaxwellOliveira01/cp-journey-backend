@@ -25,4 +25,8 @@ public class Contest {
     
     public List<TeamResult> TeamResults { get; set; }
     
+    public byte[]? StatementsPdf { get; set; }
+    
+    public byte[]? TutorialPdf { get; set; }
+    
 }

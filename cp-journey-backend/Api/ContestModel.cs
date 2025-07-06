@@ -12,6 +12,10 @@ public class ContestModel {
     
     public DateTime? EndDate { get; set; }
     
+    public bool HasStatements { get; set; }
+
+    public bool HasTutorial { get; set; }
+    
 }
 
 public class ContestFullModel : ContestModel {

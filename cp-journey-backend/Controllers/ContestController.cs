@@ -69,4 +69,22 @@ public class ContestController(
         return [..contests.ConvertAll(modelConverter.ToModel)];
     }
     
+    [HttpGet("{id}/statements")]
+    public async Task<IActionResult> DonwloadStatementAsync(int id) {
+        var contest = await contestRepository.GetRequiredAsync(id);
+        if (contest.StatementsPdf == null) {
+            return NotFound("Contest statement not found.");
+        }
+        return File(contest.StatementsPdf, "application/pdf", $"{contest.Name}_statements.pdf");
+    }
+    
+    [HttpGet("{id}/tutorial")]
+    public async Task<IActionResult> DownloadTutorialAsync(int id) {
+        var contest = await contestRepository.GetRequiredAsync(id);
+        if (contest.TutorialPdf == null) {
+            return NotFound("Contest statement not found.");
+        }
+        return File(contest.TutorialPdf, "application/pdf", $"{contest.Name}_tutorial.pdf");
+    }
+    
 }

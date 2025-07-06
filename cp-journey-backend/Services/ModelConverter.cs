@@ -69,6 +69,8 @@ public class ModelConverter {
             StartDate = contest.StartDate,
             EndDate = contest.EndDate,
             SiteUrl = contest.SiteUrl,
+            HasStatements = contest.StatementsPdf != null,
+            HasTutorial = contest.TutorialPdf != null,
         };
     }
 
@@ -92,7 +94,6 @@ public class ModelConverter {
             Penalty = teamResult.Penalty,
         };
     }
-    
     
     public PersonFullModel ToFullModel(Person person, University? university, List<Team> teams, List<Event> events) {
         return new PersonFullModel {
@@ -162,6 +163,8 @@ public class ModelConverter {
             Problems = problems.ConvertAll(ToModel).OrderBy(p => p.Order).ToList(),
             Local = local != null ? ToModel(local) : null,
             Results = results.OrderBy(r => r.Position).ToList(),
+            HasStatements = contest.StatementsPdf != null,
+            HasTutorial = contest.TutorialPdf != null,
         };
     }
 
