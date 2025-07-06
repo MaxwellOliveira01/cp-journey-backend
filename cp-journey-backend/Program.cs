@@ -16,6 +16,7 @@ builder.Services.AddScoped<IEventService, EventService>();
 builder.Services.AddScoped<ILocalService, LocalService>();
 builder.Services.AddScoped<IProblemService, ProblemService>();
 builder.Services.AddScoped<IContestService, ContestService>();
+builder.Services.AddScoped<ITeamResultsService, TeamResultsService>();
 
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddScoped<IUniversityRepository, UniversityRepository>();
@@ -24,6 +25,8 @@ builder.Services.AddScoped<IEventRepository, EventRepository>();
 builder.Services.AddScoped<ILocalRepository, LocalRepository>();
 builder.Services.AddScoped<IProblemRepository, ProblemRepository>();
 builder.Services.AddScoped<IContestRepository, ContestRepository>();
+builder.Services.AddScoped<ISubmissionRepository, SubmissionRepository>();
+builder.Services.AddScoped<ITeamResultsRepository, TeamResultsRepository>();
 
 builder.Services.AddSingleton<ModelConverter>();
 

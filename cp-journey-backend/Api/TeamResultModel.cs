@@ -25,3 +25,10 @@ public class ResultExistsModel {
     public bool Exists { get; set; }
     
 }
+
+public class TeamResultUpdateModel : TeamResultModel {
+
+    public List<SubmissionCreateModel> Submissions { get; set; }
+
+}
+

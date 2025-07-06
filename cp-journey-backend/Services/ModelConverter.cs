@@ -55,6 +55,7 @@ public class ModelConverter {
     public ProblemModel ToModel(Problem problem) {
         return new ProblemModel {
             Id = problem.Id,
+            ContestId = problem.ContestId,
             Name = problem.Name,
             Label = problem.Label,
             Order = problem.Order,
@@ -68,6 +69,17 @@ public class ModelConverter {
             StartDate = contest.StartDate,
             EndDate = contest.EndDate,
             SiteUrl = contest.SiteUrl,
+        };
+    }
+
+    public SubmissionModel ToModel(Submission submission) {
+        return new SubmissionModel {
+            Id = submission.Id,
+            TeamResultId = submission.TeamResultId,
+            ProblemId = submission.ProblemId,
+            Tries = submission.Tries,
+            Accepted = submission.Accepted,
+            Penalty = submission.Penalty,
         };
     }
     
@@ -119,6 +131,7 @@ public class ModelConverter {
     public ProblemFullModel ToFullModel(Problem problem, Person? setter, Contest contest) {
         return new ProblemFullModel {
             Id = problem.Id,
+            ContestId = problem.ContestId,
             Name = problem.Name,
             Label = problem.Label,
             Order = problem.Order,
@@ -128,17 +141,29 @@ public class ModelConverter {
         };
     }
     
-    public ContestFullModel ToFullModel(Contest contest, Local? local /*, List<TeamResult> ranking*/) {
+    public ContestFullModel ToFullModel(Contest contest, List<Problem> problems, Local? local) {
         return new ContestFullModel {
             Id = contest.Id,
             Name = contest.Name,
             SiteUrl = contest.SiteUrl,
             StartDate = contest.StartDate,
             EndDate = contest.EndDate,
+            Problems = problems.ConvertAll(ToModel).OrderBy(p => p.Order).ToList(),
             Local = local != null ? ToModel(local) : null,
         };
     }
 
+    public TeamResultFullModel ToFullModel(TeamResult teamResult, List<Submission> submissions) {
+        return new TeamResultFullModel {
+            Id = teamResult.Id,
+            TeamId = teamResult.TeamId,
+            ContestId = teamResult.ContestId,
+            Position = teamResult.Position,
+            Penalty = teamResult.Penalty,
+            Submissions = submissions.ConvertAll(ToModel),
+        };
+    }
+    
     public UniversitySearchModel ToSearchModel(University university, Local? local) {
         // TODO: reaproveitar ToModel
         return new UniversitySearchModel {
@@ -167,6 +192,5 @@ public class ModelConverter {
             University = university != null ? ToModel(university) : null
         };
     }
-    
 
 }

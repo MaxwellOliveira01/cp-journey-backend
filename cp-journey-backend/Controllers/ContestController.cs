@@ -11,6 +11,7 @@ public class ContestController(
     IContestRepository contestRepository,
     IContestService contestService,
     ILocalRepository localRepository,
+    IProblemRepository problemRepository,
     ModelConverter modelConverter
 ) : ControllerBase{
     
@@ -18,11 +19,13 @@ public class ContestController(
     public async Task<ContestFullModel> Get(int id) {
         var contest = await contestRepository.GetRequiredAsync(id);
         
+        var problems = await problemRepository.ListByContestAsync(contest.Id);
+        
         var local = contest.LocalId.HasValue
             ? await localRepository.GetAsync(contest.LocalId.Value)
             : null;
         
-        return modelConverter.ToFullModel(contest, local);
+        return modelConverter.ToFullModel(contest, problems, local);
     }
 
     [HttpPost]

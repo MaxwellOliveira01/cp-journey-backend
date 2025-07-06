@@ -15,3 +15,16 @@ public class SubmissionModel {
     public int Penalty { get; set; }
     
 }
+
+
+public class SubmissionCreateModel {
+    
+    public int ProblemId { get; set; }
+    
+    public int Tries { get; set; }
+    
+    public bool Accepted { get; set; }
+    
+    public int Penalty { get; set; }
+    
+}
