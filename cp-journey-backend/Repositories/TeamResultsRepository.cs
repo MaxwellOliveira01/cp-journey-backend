@@ -16,6 +16,8 @@ public interface ITeamResultsRepository {
     Task<TeamResult> GetByTeamAndContestAsync(int teamId, int contestId);
     
     Task<List<TeamResult>> ListByTeamAsync(int teamId);
+    
+    Task<List<TeamResult>> ListByContestAsync(int contestId);
 
 }
 
@@ -79,6 +81,13 @@ public class TeamResultsRepository(AppDbContext appDbContext) : ITeamResultsRepo
         const string sql = "SELECT * FROM \"TeamResults\" WHERE \"TeamId\" = {0}";
         return await appDbContext.TeamResults
             .FromSqlRaw(sql, teamId)
+            .ToListAsync();
+    }
+    
+    public async Task<List<TeamResult>> ListByContestAsync(int contestId) {
+        const string sql = "SELECT * FROM \"TeamResults\" WHERE \"ContestId\" = {0}";
+        return await appDbContext.TeamResults
+            .FromSqlRaw(sql, contestId)
             .ToListAsync();
     }
     

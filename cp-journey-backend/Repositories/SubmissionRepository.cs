@@ -5,7 +5,7 @@ namespace cp_journey_backend.Repositories;
 
 public interface ISubmissionRepository : IDefaultRepository<Submission> {
 
-    Task<List<Submission>> GetByResusltId(int resultsId);
+    Task<List<Submission>> ListByResusltId(int resultsId);
 
 }
 
@@ -31,7 +31,7 @@ public class SubmissionRepository(AppDbContext appDbContext): ISubmissionReposit
         throw new NotImplementedException();
     }
 
-    public Task<List<Submission>> GetByResusltId(int resultsId) {
+    public Task<List<Submission>> ListByResusltId(int resultsId) {
         const string sql = "SELECT * FROM \"Submissions\" WHERE \"TeamResultId\" = {0}";
         return appDbContext.Submissions.FromSqlRaw(sql, resultsId).ToListAsync();
     }

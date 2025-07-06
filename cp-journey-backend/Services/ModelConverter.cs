@@ -152,7 +152,7 @@ public class ModelConverter {
         };
     }
     
-    public ContestFullModel ToFullModel(Contest contest, List<Problem> problems, Local? local) {
+    public ContestFullModel ToFullModel(Contest contest, List<Problem> problems, List<TeamResultFullModel> results, Local? local) {
         return new ContestFullModel {
             Id = contest.Id,
             Name = contest.Name,
@@ -161,6 +161,7 @@ public class ModelConverter {
             EndDate = contest.EndDate,
             Problems = problems.ConvertAll(ToModel).OrderBy(p => p.Order).ToList(),
             Local = local != null ? ToModel(local) : null,
+            Results = results.OrderBy(r => r.Position).ToList(),
         };
     }
 

@@ -12,6 +12,8 @@ public class ContestController(
     IContestService contestService,
     ILocalRepository localRepository,
     IProblemRepository problemRepository,
+    ITeamResultsRepository teamResultsRepository,
+    ISubmissionRepository submissionRepository,
     ModelConverter modelConverter
 ) : ControllerBase{
     
@@ -25,7 +27,15 @@ public class ContestController(
             ? await localRepository.GetAsync(contest.LocalId.Value)
             : null;
         
-        return modelConverter.ToFullModel(contest, problems, local);
+        var results = await teamResultsRepository.ListByContestAsync(contest.Id);
+        var resultsFullModel = new List<TeamResultFullModel>();
+        
+        foreach (var result in results) {
+            var submissions = await submissionRepository.ListByResusltId(result.Id);
+            resultsFullModel.Add(modelConverter.ToFullModel(result, submissions));
+        }
+        
+        return modelConverter.ToFullModel(contest, problems, resultsFullModel, local);
     }
 
     [HttpPost]

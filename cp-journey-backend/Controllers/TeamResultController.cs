@@ -25,7 +25,7 @@ public class TeamResultController(
     [HttpGet("by-team-and-contest")]
     public async Task<TeamResultModel> GetByTeamAndContestAsync(int teamId, int contestId) {
         var result = await teamResultsRepository.GetByTeamAndContestAsync(teamId, contestId);        
-        var submissions = await submissionRepository.GetByResusltId(result.Id);
+        var submissions = await submissionRepository.ListByResusltId(result.Id);
         return modelConverter.ToFullModel(result, submissions);
     }
     

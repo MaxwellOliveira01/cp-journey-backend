@@ -20,7 +20,7 @@ public class ContestFullModel : ContestModel {
     
     public List<ProblemModel> Problems { get; set; }
     
-    // public List<TeamResultModel> Ranking { get; set; }
+    public List<TeamResultFullModel> Results { get; set; }
     
 }
 

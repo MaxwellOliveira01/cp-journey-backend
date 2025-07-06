@@ -47,7 +47,8 @@ public class ProblemController(
     [HttpGet("list")] // TODO: implement pagination
     public async Task<List<ProblemModel>> ListAsync() {
         var problems = await problemRepository.ListAsync();
-        return [..problems.ConvertAll(modelConverter.ToModel)];
+        var orderedProblems = problems.OrderBy(p => p.ContestId).ThenBy(p => p.Order).ToList();
+        return [..orderedProblems.ConvertAll(modelConverter.ToModel)];
     }
     
 }
