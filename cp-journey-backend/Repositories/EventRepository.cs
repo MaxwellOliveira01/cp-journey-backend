@@ -18,13 +18,18 @@ public class EventRepository(AppDbContext appDbContext) : IEventRepository {
         // So we need to use the EF core to handle that
         // EF Core will automatically insert the new entity and put the new id on entity.Id
         
+        var participants = entity.Participants;
+        entity.Participants = [];
+        
         await appDbContext.Events.AddAsync(entity);
         await appDbContext.SaveChangesAsync();
-        
-        foreach (var participant in entity.Participants) {
-            await appDbContext.EventParticipations.AddAsync(participant);
-            await appDbContext.SaveChangesAsync();
+
+        foreach (var participant in participants) {
+            participant.EventId = entity.Id;
         }
+        
+        await appDbContext.AddRangeAsync(entity.Participants);
+        await appDbContext.SaveChangesAsync();
         
     }
 
@@ -49,6 +54,7 @@ public class EventRepository(AppDbContext appDbContext) : IEventRepository {
         await appDbContext.Database.ExecuteSqlRawAsync(deleteParticipantsSql, entity.Id);
         
         foreach (var participant in entity.Participants) {
+            participant.EventId = entity.Id;
             const string memberSql = "INSERT INTO \"EventParticipations\" (\"PersonId\", \"EventId\") VALUES ({0}, {1})";
             await appDbContext.Database.ExecuteSqlRawAsync(memberSql, participant.PersonId, participant.EventId);
         }

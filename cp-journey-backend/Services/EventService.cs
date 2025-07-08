@@ -43,8 +43,8 @@ public class EventService(
         ev.Local = local;
 
         ev.Participants = (data.ParticipantIds ?? []).Select(p => new EventParticipation {
+            //EventId =, will be set on repository
             PersonId = p,
-            EventId = ev.Id
         }).ToList();
     }
     
