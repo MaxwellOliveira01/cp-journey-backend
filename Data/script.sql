@@ -184,3 +184,6 @@ create index "IX_Submissions_ProblemId"
 
 create index "IX_Submissions_TeamResultId"
     on "Submissions" ("TeamResultId");
+
+alter table "Locals" ADD CONSTRAINT UQ_Locals_City_State_Country 
+    UNIQUE ("City", "State", "Country");
